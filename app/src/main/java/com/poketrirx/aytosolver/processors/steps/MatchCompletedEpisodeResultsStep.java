@@ -12,12 +12,13 @@ package com.poketrirx.aytosolver.processors.steps;
 
 import com.poketrirx.aytosolver.models.ContestantTuple;
 import com.poketrirx.aytosolver.models.EpisodeResult;
+import com.poketrirx.aytosolver.models.KnownMatchResult;
 import com.poketrirx.aytosolver.ResultsContext;
 
 /**
- * A step that'll clean episode results by removing known matches or non matches from the results.
+ * A step that'll check each episode result, and mark all matches if all remaining tuples must all be correct.
  */
-public class CleanEpisodeResultsStep implements Step {
+public class MatchCompletedEpisodeResultsStep implements Step {
     /**
      * Processes the step's logic.
      * 
@@ -28,30 +29,17 @@ public class CleanEpisodeResultsStep implements Step {
         boolean changesMade = false;
 
         for(EpisodeResult episodeResult: context.getEpisodeResults()) {
-            for(ContestantTuple tuple: episodeResult.getContestants()) {
-                String match = context.getMatch(tuple.getContestant1Id());
-
-                if (match != null) {
-                    //if there is a match we should clean up the episode result.
-                    if (match.equals(tuple.getContestant2Id())) {
-                        //if the match is correct lets remove it.
-                        episodeResult.removeMatch(tuple.getContestant1Id(), tuple.getContestant2Id());
-                    } else {
-                        //if we know the match is wrong, we can clear out both.
-                        episodeResult.removeNonMatch(tuple.getContestant1Id());
-                        episodeResult.removeNonMatch(tuple.getContestant2Id());
-                    }
-
-                    changesMade = true;
+            if (episodeResult.getTotalCorrect() == episodeResult.getContestants().size()) {
+                for(ContestantTuple tuple: episodeResult.getContestants()) {
+                    context.addKnownMatchResult(
+                        KnownMatchResult.builder()
+                            .contestants(tuple)
+                            .match(true)
+                            .build()
+                    );
                 }
 
-                if (context.getMatch(tuple.getContestant2Id()) != null) {
-                    //if we know the match is wrong, we can clear out both.
-                    episodeResult.removeNonMatch(tuple.getContestant1Id());
-                    episodeResult.removeNonMatch(tuple.getContestant2Id());
-
-                    changesMade = true;
-                }
+                changesMade = true;
             }
         }
 

@@ -54,16 +54,20 @@ public class ResultsContext {
         }
 
         for (KnownMatchResult result : rawData.getKnownMatchResults()) {
-            data.get(result.getContestants().getContestant1Id())
-                .put(result.getContestants().getContestant2Id(), result.isMatch());
-
-            data.get(result.getContestants().getContestant2Id())
-                .put(result.getContestants().getContestant1Id(), result.isMatch());
+            addKnownMatchResult(result);
         }
 
         for (EpisodeResult result: rawData.getEpisodeResults()) {
             episodeResults.add(cloneEpisodeResult(result));
         }
+    }
+
+    public void addKnownMatchResult(KnownMatchResult result) {
+        data.get(result.getContestants().getContestant1Id())
+            .put(result.getContestants().getContestant2Id(), result.isMatch());
+
+        data.get(result.getContestants().getContestant2Id())
+            .put(result.getContestants().getContestant1Id(), result.isMatch());
     }
 
     /**
@@ -79,6 +83,13 @@ public class ResultsContext {
         }
 
         return null;
+    }
+
+    /**
+     * Checks if two contestants are matched or not. If matched, returns true, if known not to be matched false, if unkonwn null.
+     */
+    public Boolean isMatch(String contestant1Id, String contestant2Id) {
+        return data.get(contestant1Id).get(contestant2Id);
     }
 
     private EpisodeResult cloneEpisodeResult(EpisodeResult result) {
