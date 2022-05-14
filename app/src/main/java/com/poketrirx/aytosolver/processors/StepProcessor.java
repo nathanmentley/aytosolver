@@ -22,7 +22,7 @@ import com.poketrirx.aytosolver.ResultsContext;
 /**
  * A processor that'll use a list of steps to attempt to solve the matches.
  */
-public class StepProcessor implements Processor {
+public final class StepProcessor implements Processor {
     private List<Step> steps;
 
     /**

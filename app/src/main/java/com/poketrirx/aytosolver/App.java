@@ -23,7 +23,7 @@ import com.poketrirx.aytosolver.ResultsContext;
 /**
  * A class that contains and executes the app logic.
  */
-public class App {
+public final class App {
     @NonNull private final Importer importer;
     @NonNull private final Exporter exporter;
     @NonNull private final Processor processor;

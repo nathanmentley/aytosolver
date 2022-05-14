@@ -26,7 +26,7 @@ import lombok.ToString;
 /**
  * A POJO that contains all of the input data that can be analyzed.
  */
-public class Data {
+public final class Data {
     /**
      * Data around the contestants.
      */

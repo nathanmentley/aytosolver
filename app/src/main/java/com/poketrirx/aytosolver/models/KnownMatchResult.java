@@ -26,7 +26,7 @@ import lombok.ToString;
 /**
  * A POJO that contains a known match or lack of one between two contestants
  */
-public class KnownMatchResult {
+public final class KnownMatchResult {
     /**
      * The two contestants related to this result.
      */

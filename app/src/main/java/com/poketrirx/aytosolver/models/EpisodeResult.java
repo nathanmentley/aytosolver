@@ -28,7 +28,7 @@ import lombok.ToString;
 /**
  * A POJO that contains results from an episode.
  */
-public class EpisodeResult {
+public final class EpisodeResult {
     /**
      * All contestant matches in the result.
      */

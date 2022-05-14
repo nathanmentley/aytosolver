@@ -24,7 +24,7 @@ import lombok.ToString;
 /**
  * A POJO that contains information about a contestant on the show.
  */
-public class Contestant {
+public final class Contestant {
     /**
      * A unqiue identifier for the contestant.
      */

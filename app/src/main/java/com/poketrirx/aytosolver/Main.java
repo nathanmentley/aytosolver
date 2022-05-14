@@ -17,7 +17,7 @@ import com.poketrirx.aytosolver.processors.StepProcessor;
 /**
  * Entrypoint
  */
-public class Main {
+public final class Main {
     /**
      * Entrypoint. Builds and runs the app.
      */

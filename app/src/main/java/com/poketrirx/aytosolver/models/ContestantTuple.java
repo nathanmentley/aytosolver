@@ -24,7 +24,7 @@ import lombok.ToString;
 /**
  * A POJO that contains a link between two Contestants
  */
-public class ContestantTuple {
+public final class ContestantTuple {
     /**
      * The unique identifier of the first contestant.
      */

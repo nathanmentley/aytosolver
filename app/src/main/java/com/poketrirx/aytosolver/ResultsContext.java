@@ -32,7 +32,7 @@ import com.poketrirx.aytosolver.models.KnownMatchResult;
 /**
  * A POJO that holds the current state and progress of the solution.
  */
-public class ResultsContext {
+public final class ResultsContext {
     @NonNull @Getter private Map<String, Map<String, Boolean>> data;
     @NonNull @Getter private List<EpisodeResult> episodeResults;
 
