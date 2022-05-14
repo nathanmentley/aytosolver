@@ -10,6 +10,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package com.poketrirx.aytosolver.exporters;
 
+import java.util.List;
+
 import com.poketrirx.aytosolver.models.Contestant;
 import com.poketrirx.aytosolver.models.Data;
 import com.poketrirx.aytosolver.ResultsContext;
@@ -18,6 +20,16 @@ import com.poketrirx.aytosolver.ResultsContext;
 * An exporter that'll simply output the results to the console using standard out.
 */
 public class StdOutExporter implements Exporter {
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_BLACK = "\u001B[30m";
+    private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_YELLOW = "\u001B[33m";
+    private static final String ANSI_BLUE = "\u001B[34m";
+    private static final String ANSI_PURPLE = "\u001B[35m";
+    private static final String ANSI_CYAN = "\u001B[36m";
+    private static final String ANSI_WHITE = "\u001B[37m";
+
     /**
     * Exports the results based on the raw input data and the current state of the context. 
     *
@@ -27,18 +39,50 @@ public class StdOutExporter implements Exporter {
     public void export(Data data, ResultsContext context) {
         StringBuilder builder = new StringBuilder();
 
+        builder.append(System.lineSeparator());
+        builder.append(System.lineSeparator());
+
+        builder.append(ANSI_YELLOW);
+        builder.append("Final Results:");
+        builder.append(ANSI_RESET);
+
+        builder.append(System.lineSeparator());
+        builder.append(System.lineSeparator());
+
         for (Contestant contestant : data.getContestants()) {
             String matchId = context.getMatch(contestant.getId());
 
+            builder.append(ANSI_BLUE);
             builder.append(contestant.getName());
+            builder.append(ANSI_RESET);
 
+            builder.append(ANSI_BLACK);
             builder.append(" - ");
+            builder.append(ANSI_RESET);
 
-            builder.append(matchId == null ? "Unknown Match": matchId);
+            if (matchId == null) {
+                builder.append(ANSI_RED);
+                builder.append("Unknown Match");
+                builder.append(ANSI_RESET);
+            } else {
+                builder.append(ANSI_GREEN);
+                builder.append(getContestantName(data.getContestants(), matchId));
+                builder.append(ANSI_RESET);
+            }
 
             builder.append(System.lineSeparator());
         }
 
         System.out.print(builder.toString());
+    }
+
+    private static String getContestantName(List<Contestant> contestants, String id) {
+        for(Contestant contestant : contestants) {
+            if (contestant.getId().equals(id)) {
+                return contestant.getName();
+            }
+        }
+
+        return "Unknown Contestant";
     }
 }

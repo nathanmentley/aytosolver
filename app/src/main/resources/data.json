@@ -1,18 +1,240 @@
 {
     "contestants": [
         {
-            "id": "1",
-            "name": "name"
+            "id": "asaf",
+            "name": "Asaf"
         },
         {
-            "id": "2",
-            "name": "name"
+            "id": "cam",
+            "name": "Cam"
+        },
+        {
+            "id": "cameron",
+            "name": "Cameron"
+        },
+        {
+            "id": "gio",
+            "name": "Gio"
+        },
+        {
+            "id": "john",
+            "name": "John"
+        },
+        {
+            "id": "morgan",
+            "name": "Morgan"
+        },
+        {
+            "id": "prosper",
+            "name": "Prosper"
+        },
+        {
+            "id": "sam",
+            "name": "Sam"
+        },
+        {
+            "id": "stephen",
+            "name": "Stephen"
+        },
+        {
+            "id": "tyler",
+            "name": "Tyler"
+        },
+        {
+            "id": "alyssa",
+            "name": "Alyssa"
+        },
+        {
+            "id": "camile",
+            "name": "Camile"
+        },
+        {
+            "id": "emma",
+            "name": "Emma"
+        },
+        {
+            "id": "francesca",
+            "name": "Francesca"
+        },
+        {
+            "id": "julia",
+            "name": "Julia"
+        },
+        {
+            "id": "kaylen",
+            "name": "Kaylen"
+        },
+        {
+            "id": "mikala",
+            "name": "Mikala"
+        },
+        {
+            "id": "nicole",
+            "name": "Nicole"
+        },
+        {
+            "id": "tori",
+            "name": "Tori"
+        },
+        {
+            "id": "victoria",
+            "name": "Victoria"
         }
     ],
     "episodeResults": [
-
+        {
+            "contestants": [
+                {
+                    "contestant1Id": "kaylen",
+                    "contestant2Id": "gio"
+                },
+                {
+                    "contestant1Id": "victoria",
+                    "contestant2Id": "cam"
+                },
+                {
+                    "contestant1Id": "francesca",
+                    "contestant2Id": "asaf"
+                },
+                {
+                    "contestant1Id": "emma",
+                    "contestant2Id": "john"
+                },
+                {
+                    "contestant1Id": "camile",
+                    "contestant2Id": "prosper"
+                },
+                {
+                    "contestant1Id": "alyssa",
+                    "contestant2Id": "sam"
+                },
+                {
+                    "contestant1Id": "mikala",
+                    "contestant2Id": "cameron"
+                },
+                {
+                    "contestant1Id": "julia",
+                    "contestant2Id": "morgan"
+                },
+                {
+                    "contestant1Id": "nicole",
+                    "contestant2Id": "stephen"
+                },
+                {
+                    "contestant1Id": "tori",
+                    "contestant2Id": "tyler"
+                }
+            ],
+            "totalCorrect": 3
+        },
+        {
+            "contestants": [
+                {
+                    "contestant1Id": "cam",
+                    "contestant2Id": "julia"
+                },
+                {
+                    "contestant1Id": "tyler",
+                    "contestant2Id": "victoria"
+                },
+                {
+                    "contestant1Id": "stephen",
+                    "contestant2Id": "tori"
+                },
+                {
+                    "contestant1Id": "cameron",
+                    "contestant2Id": "mikala"
+                },
+                {
+                    "contestant1Id": "morgan",
+                    "contestant2Id": "alyssa"
+                },
+                {
+                    "contestant1Id": "sam",
+                    "contestant2Id": "francesca"
+                },
+                {
+                    "contestant1Id": "prosper",
+                    "contestant2Id": "emma"
+                },
+                {
+                    "contestant1Id": "asaf",
+                    "contestant2Id": "camile"
+                },
+                {
+                    "contestant1Id": "gio",
+                    "contestant2Id": "kaylen"
+                },
+                {
+                    "contestant1Id": "john",
+                    "contestant2Id": "nicole"
+                }
+            ],
+            "totalCorrect": 3
+        },
+        {
+            "contestants": [
+                {
+                    "contestant1Id": "francesca",
+                    "contestant2Id": "morgan"
+                },
+                {
+                    "contestant1Id": "camile",
+                    "contestant2Id": "asaf"
+                },
+                {
+                    "contestant1Id": "nicole",
+                    "contestant2Id": "cam"
+                },
+                {
+                    "contestant1Id": "tori",
+                    "contestant2Id": "stephen"
+                },
+                {
+                    "contestant1Id": "victoria",
+                    "contestant2Id": "john"
+                },
+                {
+                    "contestant1Id": "emma",
+                    "contestant2Id": "prosper"
+                },
+                {
+                    "contestant1Id": "kaylen",
+                    "contestant2Id": "gio"
+                },
+                {
+                    "contestant1Id": "alyssa",
+                    "contestant2Id": "sam"
+                },
+                {
+                    "contestant1Id": "julia",
+                    "contestant2Id": "tyler"
+                }
+            ],
+            "totalCorrect": 4
+        }
     ],
     "knownMatchResults": [
-
+        {
+            "contestants": {
+                "contestant1Id": "prosper",
+                "contestant2Id": "tori"
+            },
+            "match": false
+        },
+        {
+            "contestants": {
+                "contestant1Id": "john",
+                "contestant2Id": "julia"
+            },
+            "match": false
+        },
+        {
+            "contestants": {
+                "contestant1Id": "cameron",
+                "contestant2Id": "mikala"
+            },
+            "match": true
+        }
     ]
 }

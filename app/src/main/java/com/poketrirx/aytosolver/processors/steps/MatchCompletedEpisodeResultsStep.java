@@ -16,16 +16,25 @@ import com.poketrirx.aytosolver.models.KnownMatchResult;
 import com.poketrirx.aytosolver.ResultsContext;
 
 /**
- * A step that'll check each episode result, and mark all matches if all remaining tuples must all be correct.
+ * A step that'll check each episode result, and mark all matches if all remaining tuples must be correct.
  */
-public class MatchCompletedEpisodeResultsStep implements Step {
+public final class MatchCompletedEpisodeResultsStep extends Step {
+    /**
+     * Gets the name of the step.
+     * 
+     * @return The name of the step.
+     */
+    @Override public String getName() {
+        return "Match Completed Episode Results";
+    }
+
     /**
      * Processes the step's logic.
      * 
      * @param context   The currently processed context.
      * @return A boolean that if true, means some progress was made in this step.
      */
-    public boolean process(ResultsContext context) {
+    @Override public boolean process(ResultsContext context) {
         boolean changesMade = false;
 
         for(EpisodeResult episodeResult: context.getEpisodeResults()) {

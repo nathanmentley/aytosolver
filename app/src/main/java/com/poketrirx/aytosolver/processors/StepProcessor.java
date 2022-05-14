@@ -10,8 +10,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package com.poketrirx.aytosolver.processors;
 
+import java.util.Arrays;
 import java.util.List;
 
+import com.poketrirx.aytosolver.processors.steps.CleanEpisodeResultsStep;
+import com.poketrirx.aytosolver.processors.steps.MatchCompletedEpisodeResultsStep;
+import com.poketrirx.aytosolver.processors.steps.UnmatchCompletedEpisodeResultsStep;
 import com.poketrirx.aytosolver.processors.steps.Step;
 import com.poketrirx.aytosolver.ResultsContext;
 
@@ -23,11 +27,14 @@ public class StepProcessor implements Processor {
 
     /**
      * Constructor
-     * 
-     * 
      */
-    public StepProcessor(List<Step> steps) {
-        this.steps = steps;
+    public StepProcessor() {
+        this.steps = 
+            Arrays.asList(
+                new CleanEpisodeResultsStep(),
+                new MatchCompletedEpisodeResultsStep(),
+                new UnmatchCompletedEpisodeResultsStep()
+            );
     }
 
     /**
@@ -36,11 +43,27 @@ public class StepProcessor implements Processor {
     public void process(ResultsContext context) {
         boolean changesMade;
 
+        int counter = 0;
         do {
+            System.out.println(String.format("Running solve loop for the %d time.", ++counter));
+
             changesMade = false;
 
             for(Step step : steps) {
-                changesMade |= step.process(context);
+                System.out.println(String.format("Running step [%s] in loop iteration %d.", step.getName(), counter));
+
+                boolean changesMadeInCurrentStep = step.process(context);
+
+                System.out.println(
+                    String.format(
+                        "Step [%s] finished in loop iteration %d. Changes made: %s.",
+                        step.getName(),
+                        counter,
+                        changesMadeInCurrentStep
+                    )
+                );
+
+                changesMade |= changesMadeInCurrentStep;
             }
         }
         while (changesMade);

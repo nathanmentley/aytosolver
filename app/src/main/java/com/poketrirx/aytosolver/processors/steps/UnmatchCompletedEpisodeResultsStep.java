@@ -10,18 +10,23 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package com.poketrirx.aytosolver.processors.steps;
 
+import com.poketrirx.aytosolver.models.ContestantTuple;
+import com.poketrirx.aytosolver.models.EpisodeResult;
+import com.poketrirx.aytosolver.models.KnownMatchResult;
 import com.poketrirx.aytosolver.ResultsContext;
 
 /**
- * An atomic step that can be used to solve the matches.
+ * A step that'll check each episode result, and mark all matches as false if all remaining tuples must be incorrect.
  */
-public abstract class Step {
+public final class UnmatchCompletedEpisodeResultsStep extends Step {
     /**
      * Gets the name of the step.
      * 
      * @return The name of the step.
      */
-    public abstract String getName();
+    @Override public String getName() {
+        return "Unmatch Completed Episode Results";
+    }
 
     /**
      * Processes the step's logic.
@@ -29,5 +34,24 @@ public abstract class Step {
      * @param context   The currently processed context.
      * @return A boolean that if true, means some progress was made in this step.
      */
-    public abstract boolean process(ResultsContext context);
+    @Override public boolean process(ResultsContext context) {
+        boolean changesMade = false;
+
+        for(EpisodeResult episodeResult: context.getEpisodeResults()) {
+            if (episodeResult.getTotalCorrect() == 0 && episodeResult.getContestants().size() > 0) {
+                for(ContestantTuple tuple: episodeResult.getContestants()) {
+                    context.addKnownMatchResult(
+                        KnownMatchResult.builder()
+                            .contestants(tuple)
+                            .match(false)
+                            .build()
+                    );
+                }
+
+                changesMade = true;
+            }
+        }
+
+        return changesMade;
+    }
 }

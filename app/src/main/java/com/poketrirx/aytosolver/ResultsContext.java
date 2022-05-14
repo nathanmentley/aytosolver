@@ -62,19 +62,11 @@ public class ResultsContext {
         }
     }
 
-    public void addKnownMatchResult(KnownMatchResult result) {
-        data.get(result.getContestants().getContestant1Id())
-            .put(result.getContestants().getContestant2Id(), result.isMatch());
-
-        data.get(result.getContestants().getContestant2Id())
-            .put(result.getContestants().getContestant1Id(), result.isMatch());
-    }
-
     /**
      * Fetches the id of a contestant that is a match of the passed contestant id. If no match is known null is returned.
      */
     public String getMatch(String contestantId) {
-        for (Map.Entry<String, Boolean> entry : data.get(contestantId).entrySet()) {
+        for (Map.Entry<String, Boolean> entry : getContestantData(contestantId).entrySet()) {
             Boolean isMatch = entry.getValue();
 
             if (isMatch != null && isMatch == true) {
@@ -83,6 +75,17 @@ public class ResultsContext {
         }
 
         return null;
+    }
+
+    /**
+     * Sets a known results for a pair of contestants. The known result can be a perfect match or a non match.
+     */
+    public void addKnownMatchResult(KnownMatchResult result) {
+        getContestantData(result.getContestants().getContestant1Id())
+            .put(result.getContestants().getContestant2Id(), result.isMatch());
+
+        getContestantData(result.getContestants().getContestant2Id())
+            .put(result.getContestants().getContestant1Id(), result.isMatch());
     }
 
     /**
@@ -103,5 +106,13 @@ public class ResultsContext {
         }
 
         return result.toBuilder().contestants(clone).build();
+    }
+
+    private Map<String, Boolean> getContestantData(String id) {
+        if (!data.containsKey(id)) {
+            throw new RuntimeException(String.format("Data missing for contestant %s.", id));
+        }
+
+        return data.get(id);
     }
 }

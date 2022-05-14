@@ -10,13 +10,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package com.poketrirx.aytosolver;
 
-import java.util.Arrays;
-
 import com.poketrirx.aytosolver.exporters.StdOutExporter;
 import com.poketrirx.aytosolver.importers.ResourceJsonImporter;
 import com.poketrirx.aytosolver.processors.StepProcessor;
-import com.poketrirx.aytosolver.processors.steps.CleanEpisodeResultsStep;
-import com.poketrirx.aytosolver.processors.steps.MatchCompletedEpisodeResultsStep;
 
 /**
  * Entrypoint
@@ -29,14 +25,7 @@ public class Main {
         App.builder()
             .importer(new ResourceJsonImporter())
             .exporter(new StdOutExporter())
-            .processor(
-                new StepProcessor(
-                    Arrays.asList(
-                        new CleanEpisodeResultsStep(),
-                        new MatchCompletedEpisodeResultsStep()
-                    )
-                )
-            )
+            .processor(new StepProcessor())
             .build()
             .run();
     }

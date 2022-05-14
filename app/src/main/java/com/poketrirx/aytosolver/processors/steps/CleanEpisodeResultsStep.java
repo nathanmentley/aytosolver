@@ -10,6 +10,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package com.poketrirx.aytosolver.processors.steps;
 
+import java.util.ArrayList;
+
 import com.poketrirx.aytosolver.models.ContestantTuple;
 import com.poketrirx.aytosolver.models.EpisodeResult;
 import com.poketrirx.aytosolver.ResultsContext;
@@ -17,18 +19,27 @@ import com.poketrirx.aytosolver.ResultsContext;
 /**
  * A step that'll clean episode results by removing known matches or non matches from the results.
  */
-public class CleanEpisodeResultsStep implements Step {
+public final class CleanEpisodeResultsStep extends Step {
+    /**
+     * Gets the name of the step.
+     * 
+     * @return The name of the step.
+     */
+    @Override public String getName() {
+        return "Clean Episode Results";
+    }
+
     /**
      * Processes the step's logic.
      * 
      * @param context   The currently processed context.
      * @return A boolean that if true, means some progress was made in this step.
      */
-    public boolean process(ResultsContext context) {
+    @Override public boolean process(ResultsContext context) {
         boolean changesMade = false;
 
         for(EpisodeResult episodeResult: context.getEpisodeResults()) {
-            for(ContestantTuple tuple: episodeResult.getContestants()) {
+            for(ContestantTuple tuple: new ArrayList<ContestantTuple>(episodeResult.getContestants())) {
                 String match = context.getMatch(tuple.getContestant1Id());
 
                 if (match != null) {
