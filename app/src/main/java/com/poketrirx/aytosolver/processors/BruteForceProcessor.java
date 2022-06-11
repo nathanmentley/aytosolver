@@ -22,7 +22,7 @@ import com.poketrirx.aytosolver.ResultsContext;
 import com.poketrirx.aytosolver.ResultsContext.ResultsContextBuilder;
 
 /**
- * A processor that'll use a list of steps to attempt to solve the matches.
+ * A processor that'll test every possible match combination and return all possible match combinations that could still exist in the game.
  */
 public final class BruteForceProcessor implements Processor {
    private static final List<String> men = Arrays.asList(
@@ -53,14 +53,19 @@ public final class BruteForceProcessor implements Processor {
     public ResultsContext process(Data data) {
         ResultsContextBuilder builder = ResultsContext.builder();
 
-        long guess = 0;
+        long guess = 0; //Pretty hacky, but we're gonna use a ten digit number.
+        // the index of each number represents the index of the man in our men array
+        // the value of the digit at that index represents the matching women.
+        // If we process 0 through 10 billion that'll be every possible guess
+        // including invalid guessses where we match the same person multiple times.
+        // So, we'll need to make sure we filter those out.
+
         while(true) {
             List<ContestantTuple> guesses = buildNextGuess(data, guess++);
 
             if (guesses == null) {
                 break;
-            }
-            if (guesses.size() == 0) {
+            } else if (guesses.size() == 0) {
                 continue;
             }
 
@@ -87,12 +92,21 @@ public final class BruteForceProcessor implements Processor {
                     );
                 }
                 builder.knownMatchResult(solution);
+
+                break;
             }
         }
 
         return builder.build();
     }
 
+    /***
+     * takes our 10 digit number representing a guess, and builds a list of contestant tuples that represents our matches.
+     * 
+     * If the guess number is too large, we'll return null, and exit the processor.
+     * If the guess would be invalid because of a single person being matched to multiple people, we'll return an empty
+     *  list, and continue on to the next guess.
+     */
     private List<ContestantTuple> buildNextGuess(Data data, long guess) {
         if (guess > 9999999999L) {
             return null;
@@ -134,6 +148,7 @@ public final class BruteForceProcessor implements Processor {
         return (int)((guess / divider) % 10);
     }
 
+    //Process the guess data to see if it's actually valid or not.
     private boolean evaluateGuess(Data data, List<ContestantTuple> guess) {
         //foreach of our known results
         for (KnownMatchResult knownMatchResult : data.getKnownMatchResults()) {
@@ -175,6 +190,7 @@ public final class BruteForceProcessor implements Processor {
         return true;
     }
 
+    //A helper method to just check if a specific match exists in a list of matches.
     private boolean isMatchInList(List<ContestantTuple> episodeGuesses, ContestantTuple correctMatch) {
         for(ContestantTuple episodeGuess : episodeGuesses) {
             if (
