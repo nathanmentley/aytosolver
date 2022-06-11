@@ -22,5 +22,5 @@ public interface Processor {
      *
      * @param context   The currently processed context.
      */
-    void process(Data data, ResultsContext context);
+    ResultsContext process(Data data);
 }

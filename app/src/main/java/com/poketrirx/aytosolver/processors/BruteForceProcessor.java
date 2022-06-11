@@ -19,6 +19,7 @@ import com.poketrirx.aytosolver.models.Data;
 import com.poketrirx.aytosolver.models.EpisodeResult;
 import com.poketrirx.aytosolver.models.KnownMatchResult;
 import com.poketrirx.aytosolver.ResultsContext;
+import com.poketrirx.aytosolver.ResultsContext.ResultsContextBuilder;
 
 /**
  * A processor that'll use a list of steps to attempt to solve the matches.
@@ -49,7 +50,8 @@ public final class BruteForceProcessor implements Processor {
         "victoria"
     );
 
-    public void process(Data data, ResultsContext context) {
+    public ResultsContext process(Data data) {
+        ResultsContextBuilder builder = ResultsContext.builder();
         boolean solved = false;
 
         long guess = 0;
@@ -66,12 +68,21 @@ public final class BruteForceProcessor implements Processor {
             solved = evaluateGuess(data, guesses);
 
             if (solved) {
+                //Build a list of known matches so we can correctly report what is known, and what is a guess.
+                List<ContestantTuple> knownMatches = new ArrayList<ContestantTuple>();
+                for(KnownMatchResult knownMatchResult : data.getKnownMatchResults()) {
+                    if (knownMatchResult.isMatch()) {
+                        knownMatches.add(knownMatchResult.getContestants());
+                    }
+                }
+
                 //if our guess is possible, save our guess and exit the loop.
                 for(ContestantTuple entry : guesses) {
-                    context.addKnownMatchResult(
+                    builder.knownMatchResult(
                         KnownMatchResult.builder()
                             .contestants(entry)
                             .match(true)
+                            .guess(!isMatchInList(knownMatches, entry))
                             .build()
                     );
                 }
@@ -79,6 +90,8 @@ public final class BruteForceProcessor implements Processor {
                 break;
             }
         }
+
+        return builder.build();
     }
 
     private List<ContestantTuple> buildNextGuess(Data data, long guess) {

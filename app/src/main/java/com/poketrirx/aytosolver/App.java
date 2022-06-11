@@ -34,9 +34,7 @@ public final class App {
     public void run() {
         Data data = importer.load();
 
-        ResultsContext context = new ResultsContext(data);
-
-        processor.process(data, context);
+        ResultsContext context = processor.process(data);
 
         exporter.export(data, context);
     }

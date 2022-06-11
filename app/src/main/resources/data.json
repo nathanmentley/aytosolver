@@ -445,49 +445,56 @@
                 "contestant1Id": "prosper",
                 "contestant2Id": "tori"
             },
-            "match": false
+            "match": false,
+            "guess": false
         },
         {
             "contestants": {
                 "contestant1Id": "john",
                 "contestant2Id": "julia"
             },
-            "match": false
+            "match": false,
+            "guess": false
         },
         {
             "contestants": {
                 "contestant1Id": "cameron",
                 "contestant2Id": "mikala"
             },
-            "match": true
+            "match": true,
+            "guess": false
         },
         {
             "contestants": {
                 "contestant1Id": "tori",
                 "contestant2Id": "asaf"
             },
-            "match": false
+            "match": false,
+            "guess": false
         },
         {
             "contestants": {
                 "contestant1Id": "gio",
                 "contestant2Id": "kaylen"
             },
-            "match": false
+            "match": false,
+            "guess": false
         },
         {
             "contestants": {
                 "contestant1Id": "alyssa",
                 "contestant2Id": "sam"
             },
-            "match": true
+            "match": true,
+            "guess": false
         },
         {
             "contestants": {
                 "contestant1Id": "victoria",
                 "contestant2Id": "cam"
             },
-            "match": false
+            "match": false,
+            "guess": false
         }
 
     ]

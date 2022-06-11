@@ -36,4 +36,9 @@ public final class KnownMatchResult {
      * A boolean that defines if this result is a match.
      */
     @Getter private boolean match;
+
+    /**
+     * A boolean that defines if this result is a guess.
+     */
+    @Getter private boolean guess;
 }

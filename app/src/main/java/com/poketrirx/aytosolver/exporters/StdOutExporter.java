@@ -14,6 +14,7 @@ import java.util.List;
 
 import com.poketrirx.aytosolver.models.Contestant;
 import com.poketrirx.aytosolver.models.Data;
+import com.poketrirx.aytosolver.models.KnownMatchResult;
 import com.poketrirx.aytosolver.ResultsContext;
 
 /**
@@ -49,24 +50,29 @@ public final class StdOutExporter implements Exporter {
         builder.append(System.lineSeparator());
         builder.append(System.lineSeparator());
 
-        for (Contestant contestant : data.getContestants()) {
-            String matchId = context.getMatch(contestant.getId());
 
+        for (KnownMatchResult result : context.getKnownMatchResults()) {
             builder.append(ANSI_BLUE);
-            builder.append(contestant.getName());
+            builder.append(getContestantName(data.getContestants(), result.getContestants().getContestant1Id()));
             builder.append(ANSI_RESET);
 
             builder.append(ANSI_BLACK);
             builder.append(" - ");
             builder.append(ANSI_RESET);
 
-            if (matchId == null) {
+            if (!result.isMatch()) {
                 builder.append(ANSI_RED);
                 builder.append("Unknown Match");
                 builder.append(ANSI_RESET);
             } else {
                 builder.append(ANSI_GREEN);
-                builder.append(getContestantName(data.getContestants(), matchId));
+                builder.append(getContestantName(data.getContestants(), result.getContestants().getContestant2Id()));
+                builder.append(ANSI_RESET);
+            }
+
+            if (result.isGuess()) {
+                builder.append(ANSI_YELLOW);
+                builder.append(" ***GUESS***");
                 builder.append(ANSI_RESET);
             }
 
