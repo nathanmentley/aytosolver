@@ -12,6 +12,7 @@ package com.poketrirx.aytosolver.processors.steps;
 
 import java.util.ArrayList;
 
+import com.poketrirx.aytosolver.models.Data;
 import com.poketrirx.aytosolver.models.ContestantTuple;
 import com.poketrirx.aytosolver.models.EpisodeResult;
 import com.poketrirx.aytosolver.ResultsContext;
@@ -35,7 +36,7 @@ public final class CleanEpisodeResultsStep extends Step {
      * @param context   The currently processed context.
      * @return A boolean that if true, means some progress was made in this step.
      */
-    @Override public boolean process(ResultsContext context) {
+    @Override public boolean process(Data data, ResultsContext context) {
         boolean changesMade = false;
 
         for(EpisodeResult episodeResult: context.getEpisodeResults()) {
@@ -43,23 +44,11 @@ public final class CleanEpisodeResultsStep extends Step {
                 String match = context.getMatch(tuple.getContestant1Id());
 
                 if (match != null) {
-                    //if there is a match we should clean up the episode result.
-                    if (match.equals(tuple.getContestant2Id())) {
-                        //if the match is correct lets remove it.
-                        episodeResult.removeMatch(tuple.getContestant1Id(), tuple.getContestant2Id());
-                    } else {
-                        //if we know the match is wrong, we can clear out both.
-                        episodeResult.removeNonMatch(tuple.getContestant1Id());
-                        episodeResult.removeNonMatch(tuple.getContestant2Id());
-                    }
+                    handleMatchedFirstContenstant(episodeResult, tuple, match);
 
                     changesMade = true;
-                }
-
-                if (context.getMatch(tuple.getContestant2Id()) != null) {
-                    //if we know the match is wrong, we can clear out both.
-                    episodeResult.removeNonMatch(tuple.getContestant1Id());
-                    episodeResult.removeNonMatch(tuple.getContestant2Id());
+                } else if (context.getMatch(tuple.getContestant2Id()) != null) {
+                    handleMatchedSecondContenstant(episodeResult, tuple);
 
                     changesMade = true;
                 }
@@ -67,5 +56,29 @@ public final class CleanEpisodeResultsStep extends Step {
         }
 
         return changesMade;
+    }
+
+    /**
+     * If the first contestant in the tuple has a known match, we'll remove it from this episode result to simplify work in the future.
+     */
+    private static void handleMatchedFirstContenstant(EpisodeResult episodeResult, ContestantTuple tuple, String match) {
+        //if there is a match we should clean up the episode result.
+        if (match.equals(tuple.getContestant2Id())) {
+            //if the match is correct lets remove it.
+            episodeResult.removeMatch(tuple.getContestant1Id(), tuple.getContestant2Id());
+        } else {
+            //if we know the match is wrong, we can clear out both.
+            episodeResult.removeNonMatch(tuple.getContestant1Id());
+            episodeResult.removeNonMatch(tuple.getContestant2Id());
+        }
+    }
+
+    /**
+     * If the second contestant in the tuple has a known match, we'll remove it from this episode result to simplify work in the future.
+     */
+    private static void handleMatchedSecondContenstant(EpisodeResult episodeResult, ContestantTuple tuple) {
+        //if we know the match is wrong, we can clear out both.
+        episodeResult.removeNonMatch(tuple.getContestant1Id());
+        episodeResult.removeNonMatch(tuple.getContestant2Id());
     }
 }

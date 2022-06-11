@@ -42,31 +42,12 @@ public final class EpisodeResult {
     public void removeMatch(String id1, String id2) {
         totalCorrect--;
 
-        contestants.remove(
-            ContestantTuple.builder()
-                .contestant1Id(id1)
-                .contestant2Id(id2)
-                .build()
-        );
-
-        contestants.remove(
-            ContestantTuple.builder()
-                .contestant1Id(id2)
-                .contestant2Id(id1)
-                .build()
-        );
+        contestants.removeIf(tuple -> tuple.getContestant1Id() == id1 && tuple.getContestant2Id() == id2);
+        contestants.removeIf(tuple -> tuple.getContestant1Id() == id2 && tuple.getContestant2Id() == id1);
     }
 
     public void removeNonMatch(String id) {
-        for(int i = 0; i < contestants.size(); i++) {
-            if (
-                contestants.get(i).getContestant1Id().equals(id) ||
-                contestants.get(i).getContestant2Id().equals(id)
-            ) {
-                contestants.remove(i);
-                
-                break;
-            }
-        }
+        contestants.removeIf(tuple -> tuple.getContestant1Id() == id);
+        contestants.removeIf(tuple -> tuple.getContestant2Id() == id);
     }
 }

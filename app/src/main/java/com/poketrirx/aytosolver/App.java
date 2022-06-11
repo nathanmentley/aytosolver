@@ -36,7 +36,7 @@ public final class App {
 
         ResultsContext context = new ResultsContext(data);
 
-        processor.process(context);
+        processor.process(data, context);
 
         exporter.export(data, context);
     }

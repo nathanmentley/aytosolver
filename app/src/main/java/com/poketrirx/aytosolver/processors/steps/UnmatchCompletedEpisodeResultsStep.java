@@ -10,6 +10,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package com.poketrirx.aytosolver.processors.steps;
 
+import com.poketrirx.aytosolver.models.Data;
 import com.poketrirx.aytosolver.models.ContestantTuple;
 import com.poketrirx.aytosolver.models.EpisodeResult;
 import com.poketrirx.aytosolver.models.KnownMatchResult;
@@ -34,21 +35,27 @@ public final class UnmatchCompletedEpisodeResultsStep extends Step {
      * @param context   The currently processed context.
      * @return A boolean that if true, means some progress was made in this step.
      */
-    @Override public boolean process(ResultsContext context) {
+    @Override public boolean process(Data data, ResultsContext context) {
         boolean changesMade = false;
 
         for(EpisodeResult episodeResult: context.getEpisodeResults()) {
             if (episodeResult.getTotalCorrect() == 0 && episodeResult.getContestants().size() > 0) {
                 for(ContestantTuple tuple: episodeResult.getContestants()) {
-                    context.addKnownMatchResult(
-                        KnownMatchResult.builder()
-                            .contestants(tuple)
-                            .match(false)
-                            .build()
-                    );
-                }
+                    Boolean isMatch = context.isMatch(tuple.getContestant1Id(), tuple.getContestant2Id());
 
-                changesMade = true;
+                    if (isMatch == null) {
+                        context.addKnownMatchResult(
+                            KnownMatchResult.builder()
+                                .contestants(tuple)
+                                .match(false)
+                                .build()
+                        );
+
+                        changesMade = true;
+                    } else if (isMatch == true) {
+                        throw new RuntimeException("impossible operation");
+                    }
+                }
             }
         }
 

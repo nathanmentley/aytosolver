@@ -2,103 +2,83 @@
     "contestants": [
         {
             "id": "asaf",
-            "name": "Asaf",
-            "group": "M"
+            "name": "Asaf"
         },
         {
             "id": "cam",
-            "name": "Cam",
-            "group": "M"
+            "name": "Cam"
         },
         {
             "id": "cameron",
-            "name": "Cameron",
-            "group": "M"
+            "name": "Cameron"
         },
         {
             "id": "gio",
-            "name": "Gio",
-            "group": "M"
+            "name": "Gio"
         },
         {
             "id": "john",
-            "name": "John",
-            "group": "M"
+            "name": "John"
         },
         {
             "id": "morgan",
-            "name": "Morgan",
-            "group": "M"
+            "name": "Morgan"
         },
         {
             "id": "prosper",
-            "name": "Prosper",
-            "group": "M"
+            "name": "Prosper"
         },
         {
             "id": "sam",
-            "name": "Sam",
-            "group": "M"
+            "name": "Sam"
         },
         {
             "id": "stephen",
-            "name": "Stephen",
-            "group": "M"
+            "name": "Stephen"
         },
         {
             "id": "tyler",
-            "name": "Tyler",
-            "group": "M"
+            "name": "Tyler"
         },
         {
             "id": "alyssa",
-            "name": "Alyssa",
-            "group": "F"
+            "name": "Alyssa"
         },
         {
             "id": "camile",
-            "name": "Camile",
-            "group": "F"
+            "name": "Camile"
         },
         {
             "id": "emma",
-            "name": "Emma",
-            "group": "F"
+            "name": "Emma"
         },
         {
             "id": "francesca",
-            "name": "Francesca",
-            "group": "F"
+            "name": "Francesca"
         },
         {
             "id": "julia",
-            "name": "Julia",
-            "group": "F"
+            "name": "Julia"
         },
         {
             "id": "kaylen",
-            "name": "Kaylen",
-            "group": "F"
+            "name": "Kaylen"
         },
         {
             "id": "mikala",
-            "name": "Mikala",
-            "group": "F"
+            "name": "Mikala"
         },
         {
             "id": "nicole",
-            "name": "Nicole",
-            "group": "F"
+            "name": "Nicole"
         },
         {
             "id": "tori",
-            "name": "Tori",
-            "group": "F"
+            "name": "Tori"
         },
         {
             "id": "victoria",
-            "name": "Victoria",
-            "group": "F"
+            "name": "Victoria"
         }
     ],
     "episodeResults": [
@@ -116,15 +96,18 @@
                 },
                 {
                     "contestant1Id": "francesca",
-                    "contestant2Id": "asaf"
+                    "contestant2Id": "asaf",
+                    "@@RESULT": false
                 },
                 {
                     "contestant1Id": "emma",
-                    "contestant2Id": "john"
+                    "contestant2Id": "john",
+                    "@@RESULT": true
                 },
                 {
                     "contestant1Id": "camile",
-                    "contestant2Id": "prosper"
+                    "contestant2Id": "prosper",
+                    "@@RESULT": false
                 },
                 {
                     "contestant1Id": "alyssa",
@@ -138,15 +121,18 @@
                 },
                 {
                     "contestant1Id": "julia",
-                    "contestant2Id": "morgan"
+                    "contestant2Id": "morgan",
+                    "@@RESULT": false
                 },
                 {
                     "contestant1Id": "nicole",
-                    "contestant2Id": "stephen"
+                    "contestant2Id": "stephen",
+                    "@@RESULT": false
                 },
                 {
                     "contestant1Id": "tori",
-                    "contestant2Id": "tyler"
+                    "contestant2Id": "tyler",
+                    "@@RESULT": false
                 }
             ],
             "totalCorrect": 3
@@ -155,15 +141,18 @@
             "contestants": [
                 {
                     "contestant1Id": "cam",
-                    "contestant2Id": "julia"
+                    "contestant2Id": "julia",
+                    "@@RESULT": false
                 },
                 {
                     "contestant1Id": "tyler",
-                    "contestant2Id": "victoria"
+                    "contestant2Id": "victoria",
+                    "@@RESULT": false
                 },
                 {
                     "contestant1Id": "stephen",
-                    "contestant2Id": "tori"
+                    "contestant2Id": "tori",
+                    "@@RESULT": false
                 },
                 {
                     "contestant1Id": "cameron",
@@ -182,11 +171,13 @@
                 },
                 {
                     "contestant1Id": "prosper",
-                    "contestant2Id": "emma"
+                    "contestant2Id": "emma",
+                    "@@RESULT": false
                 },
                 {
                     "contestant1Id": "asaf",
-                    "contestant2Id": "camile"
+                    "contestant2Id": "camile",
+                    "@@RESULT": true
                 },
                 {
                     "contestant1Id": "gio",
@@ -195,7 +186,8 @@
                 },
                 {
                     "contestant1Id": "john",
-                    "contestant2Id": "nicole"
+                    "contestant2Id": "nicole",
+                    "@@RESULT": false
                 }
             ],
             "totalCorrect": 3
@@ -265,7 +257,8 @@
                 },
                 {
                     "contestant1Id": "asaf",
-                    "contestant2Id": "camile"
+                    "contestant2Id": "camile",
+                    "@@RESULT": true
                 },
                 {
                     "contestant1Id": "john",
@@ -278,7 +271,8 @@
                 },
                 {
                     "contestant1Id": "stephen",
-                    "contestant2Id": "julia"
+                    "contestant2Id": "julia",
+                    "@@RESULT": true
                 },
                 {
                     "contestant1Id": "tyler",
@@ -317,7 +311,8 @@
                 },
                 {
                     "contestant1Id": "camile",
-                    "contestant2Id": "asaf"
+                    "contestant2Id": "asaf",
+                    "@@RESULT": true
                 },
                 {
                     "contestant1Id": "alyssa",
@@ -338,102 +333,8 @@
                 },
                 {
                     "contestant1Id": "francesca",
-                    "contestant2Id": "gio"
-                }
-            ],
-            "totalCorrect": 4
-        },
-        {
-            "contestants": [
-                {
-                    "contestant1Id": "mikala",
-                    "contestant2Id": "cameron",
+                    "contestant2Id": "gio",
                     "@@RESULT": true
-                },
-                {
-                    "contestant1Id": "alyssa",
-                    "contestant2Id": "sam",
-                    "@@RESULT": true
-                },
-                {
-                    "contestant1Id": "john",
-                    "contestant2Id": "emma"
-                },
-                {
-                    "contestant1Id": "cam",
-                    "contestant2Id": "victoria",
-                    "@@RESULT": false
-                },
-                {
-                    "contestant1Id": "morgan",
-                    "contestant2Id": "tori"
-                },
-                {
-                    "contestant1Id": "stephen",
-                    "contestant2Id": "julia"
-                },
-                {
-                    "contestant1Id": "gio",
-                    "contestant2Id": "francesca"
-                },
-                {
-                    "contestant1Id": "prosper",
-                    "contestant2Id": "kaylen"
-                },
-                {
-                    "contestant1Id": "tyler",
-                    "contestant2Id": "nicole"
-                },
-                {
-                    "contestant1Id": "asaf",
-                    "contestant2Id": "camile"
-                }
-            ],
-            "totalCorrect": 4
-        },
-        {
-            "contestants": [
-                {
-                    "contestant1Id": "mikala",
-                    "contestant2Id": "cameron",
-                    "@@RESULT": true
-                },
-                {
-                    "contestant1Id": "alyssa",
-                    "contestant2Id": "sam",
-                    "@@RESULT": true
-                },
-                {
-                    "contestant1Id": "victoria",
-                    "contestant2Id": "prosper"
-                },
-                {
-                    "contestant1Id": "nicole",
-                    "contestant2Id": "cam"
-                },
-                {
-                    "contestant1Id": "tori",
-                    "contestant2Id": "morgan"
-                },
-                {
-                    "contestant1Id": "emma",
-                    "contestant2Id": "gio"
-                },
-                {
-                    "contestant1Id": "francesca",
-                    "contestant2Id": "asaf"
-                },
-                {
-                    "contestant1Id": "camile",
-                    "contestant2Id": "tyler"
-                },
-                {
-                    "contestant1Id": "kaylen",
-                    "contestant2Id": "john"
-                },
-                {
-                    "contestant1Id": "julia",
-                    "contestant2Id": "stephen"
                 }
             ],
             "totalCorrect": 4
@@ -475,20 +376,70 @@
             },
             "match": false
         },
+
+
+        {
+            "contestants": {
+                "contestant1Id": "prosper",
+                "contestant2Id": "kaylen"
+            },
+            "match": true
+        },
+        {
+            "contestants": {
+                "contestant1Id": "morgan",
+                "contestant2Id": "victoria"
+            },
+            "match": true
+        },
+        {
+            "contestants": {
+                "contestant1Id": "tyler",
+                "contestant2Id": "tori"
+            },
+            "match": true
+        },
+        {
+            "contestants": {
+                "contestant1Id": "john",
+                "contestant2Id": "emma"
+            },
+            "match": true
+        },
+        {
+            "contestants": {
+                "contestant1Id": "francesca",
+                "contestant2Id": "gio"
+            },
+            "match": true
+        },
+        {
+            "contestants": {
+                "contestant1Id": "nicole",
+                "contestant2Id": "stephen"
+            },
+            "match": true
+        },
+        {
+            "contestants": {
+                "contestant1Id": "asaf",
+                "contestant2Id": "camile"
+            },
+            "match": true
+        },
+        {
+            "contestants": {
+                "contestant1Id": "julia",
+                "contestant2Id": "cam"
+            },
+            "match": true
+        },
         {
             "contestants": {
                 "contestant1Id": "alyssa",
                 "contestant2Id": "sam"
             },
             "match": true
-        },
-        {
-            "contestants": {
-                "contestant1Id": "victoria",
-                "contestant2Id": "cam"
-            },
-            "match": false
         }
-
     ]
 }

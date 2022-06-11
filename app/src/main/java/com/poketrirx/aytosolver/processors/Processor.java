@@ -10,6 +10,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package com.poketrirx.aytosolver.processors;
 
+import com.poketrirx.aytosolver.models.Data;
 import com.poketrirx.aytosolver.ResultsContext;
 
 /**
@@ -21,5 +22,5 @@ public interface Processor {
      *
      * @param context   The currently processed context.
      */
-    void process(ResultsContext context);
+    void process(Data data, ResultsContext context);
 }

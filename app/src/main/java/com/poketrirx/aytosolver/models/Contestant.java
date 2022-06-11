@@ -34,4 +34,9 @@ public final class Contestant {
      * The name of the contestant.
      */
     @NonNull @Getter private String name;
+
+    /**
+     * The group of the contestant.
+     */
+    @NonNull @Getter private String group;
 }

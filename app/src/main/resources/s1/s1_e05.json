@@ -1,0 +1,149 @@
+{
+    "contestants": [
+        {
+            "id": "Adam",
+            "name": "Adam"
+        },
+        {
+            "id": "Chris S",
+            "name": "Chris S."
+        },
+        {
+            "id": "Chris T",
+            "name": "Chris T."
+        },
+        {
+            "id": "Dillan",
+            "name": "Dillan"
+        },
+        {
+            "id": "Dre",
+            "name": "Dre"
+        },
+        {
+            "id": "Ethan",
+            "name": "Ethan"
+        },
+        {
+            "id": "John",
+            "name": "John"
+        },
+        {
+            "id": "Joey",
+            "name": "Joey"
+        },
+        {
+            "id": "Ryan",
+            "name": "Ryan"
+        },
+        {
+            "id": "Wes",
+            "name": "Wes"
+        },
+
+
+        {
+            "id": "Amber",
+            "name": "Amber"
+        },
+        {
+            "id": "Ashleigh",
+            "name": "Ashleigh"
+        },
+        {
+            "id": "Brittany",
+            "name": "Brittany"
+        },
+        {
+            "id": "Coleysia",
+            "name": "Coleysia"
+        },
+        {
+            "id": "Jacy",
+            "name": "Jacy"
+        },
+        {
+            "id": "Jessica",
+            "name": "Jessica"
+        },
+        {
+            "id": "Kayla",
+            "name": "Kayla"
+        },
+        {
+            "id": "Paige",
+            "name": "Paige"
+        },
+        {
+            "id": "Shanley",
+            "name": "Shanley"
+        },
+        {
+            "id": "Simone",
+            "name": "Simone"
+        }
+    ],
+    "episodeResults": [
+        {
+            "contestants": [
+                {
+                    "contestant1Id": "Adam",
+                    "contestant2Id": "Shanley"
+                },
+                {
+                    "contestant1Id": "Chris S",
+                    "contestant2Id": "Simone"
+                },
+                {
+                    "contestant1Id": "Chris T",
+                    "contestant2Id": "Paige"
+                },
+                {
+                    "contestant1Id": "Dillan",
+                    "contestant2Id": "Coleysia"
+                },
+                {
+                    "contestant1Id": "Dre",
+                    "contestant2Id": "Brittany"
+                },
+                {
+                    "contestant1Id": "Ethan",
+                    "contestant2Id": "Amber"
+                },
+                {
+                    "contestant1Id": "John",
+                    "contestant2Id": "Jacy"
+                },
+                {
+                    "contestant1Id": "Joey",
+                    "contestant2Id": "Jessica"
+                },
+                {
+                    "contestant1Id": "Ryan",
+                    "contestant2Id": "Ashleigh"
+                },
+                {
+                    "contestant1Id": "Wes",
+                    "contestant2Id": "Kayla"
+                }
+            ],
+            "totalCorrect": 5
+        }
+    ],
+    "knownMatchResults": [
+        {
+            "contestants": {
+                "contestant1Id": "Dre",
+                "contestant2Id": "Ashleigh"
+            },
+            "match": false
+        },
+        {
+            "contestants": {
+                "contestant1Id": "Dillan",
+                "contestant2Id": "Coleysia"
+            },
+            "match": true
+        }
+    ]
+}

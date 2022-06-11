@@ -13,6 +13,7 @@ package com.poketrirx.aytosolver.processors;
 import java.util.Arrays;
 import java.util.List;
 
+import com.poketrirx.aytosolver.models.Data;
 import com.poketrirx.aytosolver.processors.steps.CleanEpisodeResultsStep;
 import com.poketrirx.aytosolver.processors.steps.MatchCompletedEpisodeResultsStep;
 import com.poketrirx.aytosolver.processors.steps.UnmatchCompletedEpisodeResultsStep;
@@ -40,7 +41,7 @@ public final class StepProcessor implements Processor {
     /**
      * Analyzes a result context to attempt to solve all the matches.
      */
-    public void process(ResultsContext context) {
+    public void process(Data data, ResultsContext context) {
         boolean changesMade;
 
         int counter = 0;
@@ -52,7 +53,7 @@ public final class StepProcessor implements Processor {
             for(Step step : steps) {
                 System.out.println(String.format("Running step [%s] in loop iteration %d.", step.getName(), counter));
 
-                boolean changesMadeInCurrentStep = step.process(context);
+                boolean changesMadeInCurrentStep = step.process(data, context);
 
                 System.out.println(
                     String.format(

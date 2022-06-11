@@ -10,6 +10,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package com.poketrirx.aytosolver.processors.steps;
 
+import com.poketrirx.aytosolver.models.Data;
 import com.poketrirx.aytosolver.ResultsContext;
 
 /**
@@ -26,8 +27,9 @@ public abstract class Step {
     /**
      * Processes the step's logic.
      * 
-     * @param context   The currently processed context.
-     * @return A boolean that if true, means some progress was made in this step.
+     * @param data      The raw immutable input data for inspection.
+     * @param context   The ResultsContext to inspect and mutate in the step.
+     * @return          A boolean that if true, means some progress was made in this step.
      */
-    public abstract boolean process(ResultsContext context);
+    public abstract boolean process(Data data, ResultsContext context);
 }
