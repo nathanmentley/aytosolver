@@ -33,5 +33,5 @@ public final class ResultsContext {
     /**
      * Data around any konwn matches or non matches.
      */
-    @NonNull @Getter @Singular private List<KnownMatchResult> knownMatchResults;
+    @NonNull @Getter @Singular private List<List<KnownMatchResult>> knownMatchResults;
 }

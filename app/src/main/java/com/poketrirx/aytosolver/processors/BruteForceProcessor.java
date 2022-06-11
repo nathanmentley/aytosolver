@@ -52,7 +52,6 @@ public final class BruteForceProcessor implements Processor {
 
     public ResultsContext process(Data data) {
         ResultsContextBuilder builder = ResultsContext.builder();
-        boolean solved = false;
 
         long guess = 0;
         while(true) {
@@ -65,7 +64,7 @@ public final class BruteForceProcessor implements Processor {
                 continue;
             }
 
-            solved = evaluateGuess(data, guesses);
+            boolean solved = evaluateGuess(data, guesses);
 
             if (solved) {
                 //Build a list of known matches so we can correctly report what is known, and what is a guess.
@@ -76,9 +75,10 @@ public final class BruteForceProcessor implements Processor {
                     }
                 }
 
-                //if our guess is possible, save our guess and exit the loop.
+                //if our guess is possible, save our guess and continue looking for more.
+                List<KnownMatchResult> solution = new ArrayList<KnownMatchResult>(); 
                 for(ContestantTuple entry : guesses) {
-                    builder.knownMatchResult(
+                    solution.add(
                         KnownMatchResult.builder()
                             .contestants(entry)
                             .match(true)
@@ -86,8 +86,7 @@ public final class BruteForceProcessor implements Processor {
                             .build()
                     );
                 }
-
-                break;
+                builder.knownMatchResult(solution);
             }
         }
 

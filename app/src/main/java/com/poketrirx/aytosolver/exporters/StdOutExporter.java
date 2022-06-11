@@ -43,40 +43,50 @@ public final class StdOutExporter implements Exporter {
         builder.append(System.lineSeparator());
         builder.append(System.lineSeparator());
 
-        builder.append(ANSI_YELLOW);
+        builder.append(ANSI_PURPLE);
         builder.append("Final Results:");
         builder.append(ANSI_RESET);
 
         builder.append(System.lineSeparator());
         builder.append(System.lineSeparator());
 
-
-        for (KnownMatchResult result : context.getKnownMatchResults()) {
-            builder.append(ANSI_BLUE);
-            builder.append(getContestantName(data.getContestants(), result.getContestants().getContestant1Id()));
+        int counter = 1;
+        for (List<KnownMatchResult> results : context.getKnownMatchResults()) {
+            builder.append(ANSI_CYAN);
+            builder.append("Solution: ");
+            builder.append(counter);
             builder.append(ANSI_RESET);
-
-            builder.append(ANSI_BLACK);
-            builder.append(" - ");
-            builder.append(ANSI_RESET);
-
-            if (!result.isMatch()) {
-                builder.append(ANSI_RED);
-                builder.append("Unknown Match");
-                builder.append(ANSI_RESET);
-            } else {
-                builder.append(ANSI_GREEN);
-                builder.append(getContestantName(data.getContestants(), result.getContestants().getContestant2Id()));
-                builder.append(ANSI_RESET);
-            }
-
-            if (result.isGuess()) {
-                builder.append(ANSI_YELLOW);
-                builder.append(" ***GUESS***");
-                builder.append(ANSI_RESET);
-            }
-
             builder.append(System.lineSeparator());
+
+            for (KnownMatchResult result : results) {
+                builder.append(ANSI_BLUE);
+                builder.append(getContestantName(data.getContestants(), result.getContestants().getContestant1Id()));
+                builder.append(ANSI_RESET);
+
+                builder.append(ANSI_BLACK);
+                builder.append(" - ");
+                builder.append(ANSI_RESET);
+
+                if (!result.isMatch()) {
+                    builder.append(ANSI_RED);
+                    builder.append("Unknown Match");
+                    builder.append(ANSI_RESET);
+                } else {
+                    builder.append(ANSI_GREEN);
+                    builder.append(getContestantName(data.getContestants(), result.getContestants().getContestant2Id()));
+                    builder.append(ANSI_RESET);
+                }
+
+                if (result.isGuess()) {
+                    builder.append(ANSI_YELLOW);
+                    builder.append(" ***GUESS***");
+                    builder.append(ANSI_RESET);
+                }
+
+                builder.append(System.lineSeparator());
+            }
+
+            counter++;
         }
 
         System.out.print(builder.toString());
