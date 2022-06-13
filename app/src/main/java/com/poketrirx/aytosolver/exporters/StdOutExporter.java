@@ -58,38 +58,45 @@ public final class StdOutExporter implements Exporter {
             builder.append(ANSI_RESET);
             builder.append(System.lineSeparator());
 
-            for (KnownMatchResult result : results) {
-                builder.append(ANSI_BLUE);
-                builder.append(getContestantName(data.getContestants(), result.getContestants().getContestant1Id()));
-                builder.append(ANSI_RESET);
+            populateSolutionOutput(builder, data, results);
 
-                builder.append(ANSI_BLACK);
-                builder.append(" - ");
-                builder.append(ANSI_RESET);
-
-                if (!result.isMatch()) {
-                    builder.append(ANSI_RED);
-                    builder.append("Unknown Match");
-                    builder.append(ANSI_RESET);
-                } else {
-                    builder.append(ANSI_GREEN);
-                    builder.append(getContestantName(data.getContestants(), result.getContestants().getContestant2Id()));
-                    builder.append(ANSI_RESET);
-                }
-
-                if (result.isGuess()) {
-                    builder.append(ANSI_YELLOW);
-                    builder.append(" ***GUESS***");
-                    builder.append(ANSI_RESET);
-                }
-
-                builder.append(System.lineSeparator());
-            }
+            builder.append(System.lineSeparator());
+            builder.append(System.lineSeparator());
 
             counter++;
         }
 
         System.out.print(builder.toString());
+    }
+
+    private static void populateSolutionOutput(StringBuilder builder, Data data, List<KnownMatchResult> results) {
+        for (KnownMatchResult result : results) {
+            builder.append(ANSI_BLUE);
+            builder.append(getContestantName(data.getContestants(), result.getContestants().getContestant1Id()));
+            builder.append(ANSI_RESET);
+
+            builder.append(ANSI_BLACK);
+            builder.append(" - ");
+            builder.append(ANSI_RESET);
+
+            if (!result.isMatch()) {
+                builder.append(ANSI_RED);
+                builder.append("Unknown Match");
+                builder.append(ANSI_RESET);
+            } else {
+                builder.append(ANSI_GREEN);
+                builder.append(getContestantName(data.getContestants(), result.getContestants().getContestant2Id()));
+                builder.append(ANSI_RESET);
+            }
+
+            if (result.isGuess()) {
+                builder.append(ANSI_YELLOW);
+                builder.append(" ***GUESS***");
+                builder.append(ANSI_RESET);
+            }
+
+            builder.append(System.lineSeparator());
+        }
     }
 
     private static String getContestantName(List<Contestant> contestants, String id) {

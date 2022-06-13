@@ -12,7 +12,7 @@ package com.poketrirx.aytosolver;
 
 import com.poketrirx.aytosolver.exporters.StdOutExporter;
 import com.poketrirx.aytosolver.importers.ResourceJsonImporter;
-import com.poketrirx.aytosolver.processors.BruteForceProcessor;//StepProcessor;
+import com.poketrirx.aytosolver.processors.BruteForceProcessor;
 
 /**
  * Entrypoint
@@ -25,7 +25,7 @@ public final class Main {
         App.builder()
             .importer(new ResourceJsonImporter())
             .exporter(new StdOutExporter())
-            .processor(new BruteForceProcessor())//StepProcessor())
+            .processor(new BruteForceProcessor())
             .build()
             .run();
     }

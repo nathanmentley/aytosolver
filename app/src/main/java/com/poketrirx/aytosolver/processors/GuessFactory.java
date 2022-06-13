@@ -8,37 +8,20 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package com.poketrirx.aytosolver.models;
+package com.poketrirx.aytosolver.processors;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import java.util.List;
 
-@Builder(toBuilder=true)
-@EqualsAndHashCode
-@ToString(includeFieldNames=true)
-@AllArgsConstructor
-@RequiredArgsConstructor
-/**
- * A POJO that contains a known match or lack of one between two contestants
- */
-public final class KnownMatchResult {
+import com.poketrirx.aytosolver.models.ContestantTuple;
+import com.poketrirx.aytosolver.models.Data;
+
+public interface GuessFactory {
     /**
-     * The two contestants related to this result.
+     * takes our 10 digit number representing a guess, and builds a list of contestant tuples that represents our matches.
+     * 
+     * If the guess number is too large, we'll return null, and exit the processor.
+     * If the guess would be invalid because of a single person being matched to multiple people, we'll return an empty
+     *  list, and continue on to the next guess.
      */
-    @NonNull @Getter private ContestantTuple contestants;
-
-    /**
-     * A boolean that defines if this result is a match.
-     */
-    @Getter private boolean match;
-
-    /**
-     * A boolean that defines if this result is a guess or known data from the truth booth.
-     */
-    @Getter private boolean guess;
+    List<ContestantTuple> build(Data data);
 }

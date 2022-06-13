@@ -38,16 +38,4 @@ public final class EpisodeResult {
      * The total number of correct matches.
      */
     @Getter private int totalCorrect;
-
-    public void removeMatch(String id1, String id2) {
-        totalCorrect--;
-
-        contestants.removeIf(tuple -> tuple.getContestant1Id() == id1 && tuple.getContestant2Id() == id2);
-        contestants.removeIf(tuple -> tuple.getContestant1Id() == id2 && tuple.getContestant2Id() == id1);
-    }
-
-    public void removeNonMatch(String id) {
-        contestants.removeIf(tuple -> tuple.getContestant1Id() == id);
-        contestants.removeIf(tuple -> tuple.getContestant2Id() == id);
-    }
 }
