@@ -8,43 +8,34 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package com.poketrirx.aytosolver.models;
-
-import java.util.List;
+package com.poketrirx.aytosolver.core;
 
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
-@Builder(toBuilder=true)
-@EqualsAndHashCode
-@ToString(includeFieldNames=true)
-@RequiredArgsConstructor
+import com.poketrirx.aytosolver.models.Data;
+import com.poketrirx.aytosolver.models.ResultsContext;
+
+@Builder()
 /**
- * A POJO that contains all of the input data that can be analyzed.
+ * A class that contains and executes the app logic.
  */
-public final class Data {
-    /**
-     * Data around the contestants.
-     */
+public final class App {
     @NonNull
-    @Getter
-    private List<Contestant> contestants;
+    private final Importer importer;
+    @NonNull
+    private final Exporter exporter;
+    @NonNull
+    private final Processor processor;
 
     /**
-     * Data around the results from each episode.
+     * Runs the app.
      */
-    @NonNull
-    @Getter
-    private List<EpisodeResult> episodeResults;
+    public void run() {
+        Data data = importer.load();
 
-    /**
-     * Data around any konwn matches or non matches.
-     */
-    @NonNull
-    @Getter
-    private List<KnownMatchResult> knownMatchResults;
+        ResultsContext context = processor.process(data);
+
+        exporter.export(data, context);
+    }
 }

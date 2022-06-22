@@ -32,10 +32,13 @@ public final class EpisodeResult {
     /**
      * All contestant matches in the result.
      */
-    @NonNull @Getter private List<ContestantTuple> contestants;
+    @NonNull
+    @Getter
+    private List<ContestantTuple> contestants;
 
     /**
      * The total number of correct matches.
      */
-    @Getter private int totalCorrect;
+    @Getter
+    private int totalCorrect;
 }

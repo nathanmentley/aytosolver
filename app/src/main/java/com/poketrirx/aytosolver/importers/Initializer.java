@@ -8,20 +8,12 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package com.poketrirx.aytosolver.exporters;
+package com.poketrirx.aytosolver.importers;
 
-import com.poketrirx.aytosolver.models.Data;
-import com.poketrirx.aytosolver.ResultsContext;
+import com.poketrirx.aytosolver.core.Importer;
 
-/**
-* An interface that abstracts the logic of exporting the final results. 
-*/
-public interface Exporter {
-    /**
-    * Exports the results based on the raw input data and the current state of the context. 
-    *
-    * @param  data      The raw input data that was processed.
-    * @param  context   The final resulting context after processing.
-    */
-    void export(Data data, ResultsContext context);
+public class Initializer {
+    public static Importer init() {
+        return new ResourceJsonImporter();
+    }
 }

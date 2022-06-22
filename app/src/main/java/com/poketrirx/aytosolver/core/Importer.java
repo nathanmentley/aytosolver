@@ -8,34 +8,18 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package com.poketrirx.aytosolver;
+package com.poketrirx.aytosolver.core;
 
-import lombok.Builder;
-import lombok.NonNull;
-
-import com.poketrirx.aytosolver.exporters.Exporter;
-import com.poketrirx.aytosolver.importers.Importer;
 import com.poketrirx.aytosolver.models.Data;
-import com.poketrirx.aytosolver.processors.Processor;
-import com.poketrirx.aytosolver.ResultsContext;
 
-@Builder()
 /**
- * A class that contains and executes the app logic.
- */
-public final class App {
-    @NonNull private final Importer importer;
-    @NonNull private final Exporter exporter;
-    @NonNull private final Processor processor;
-
+* An interface that abstracts the logic of reading in the input data to process. 
+*/
+public interface Importer {
     /**
-     * Runs the app.
+     * Loads the input data from a data source.
+     * 
+     * @Returns The input data.
      */
-    public void run() {
-        Data data = importer.load();
-
-        ResultsContext context = processor.process(data);
-
-        exporter.export(data, context);
-    }
+    Data load();
 }

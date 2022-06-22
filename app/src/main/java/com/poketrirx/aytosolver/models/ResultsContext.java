@@ -8,19 +8,31 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package com.poketrirx.aytosolver.processors;
+package com.poketrirx.aytosolver.models;
 
-import com.poketrirx.aytosolver.models.Data;
-import com.poketrirx.aytosolver.ResultsContext;
+import java.util.List;
 
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Singular;
+import lombok.ToString;
+
+@Builder(toBuilder=true)
+@EqualsAndHashCode
+@ToString(includeFieldNames=true)
+@RequiredArgsConstructor
 /**
-* An interface that abstracts the logic processing the input data to solve all the matches. 
-*/
-public interface Processor {
+ * A POJO that contains all of the final results.
+ */
+public final class ResultsContext {
     /**
-     * Analyzes a result context to attempt to solve all the matches.
-     *
-     * @param context   The currently processed context.
+     * Data around any konwn matches or non matches.
      */
-    ResultsContext process(Data data);
+    @NonNull
+    @Getter
+    @Singular
+    private List<List<KnownMatchResult>> knownMatchResults;
 }

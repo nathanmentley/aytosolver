@@ -28,15 +28,21 @@ public final class Contestant {
     /**
      * A unqiue identifier for the contestant.
      */
-    @NonNull @Getter private String id;
+    @NonNull
+    @Getter
+    private String id;
 
     /**
      * The name of the contestant.
      */
-    @NonNull @Getter private String name;
+    @NonNull
+    @Getter
+    private String name;
 
     /**
      * The group of the contestant.
      */
-    @NonNull @Getter private String group;
+    @NonNull
+    @Getter
+    private String group;
 }

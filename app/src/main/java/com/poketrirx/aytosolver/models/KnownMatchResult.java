@@ -30,15 +30,19 @@ public final class KnownMatchResult {
     /**
      * The two contestants related to this result.
      */
-    @NonNull @Getter private ContestantTuple contestants;
+    @NonNull
+    @Getter
+    private ContestantTuple contestants;
 
     /**
      * A boolean that defines if this result is a match.
      */
-    @Getter private boolean match;
+    @Getter
+    private boolean match;
 
     /**
      * A boolean that defines if this result is a guess or known data from the truth booth.
      */
-    @Getter private boolean guess;
+    @Getter
+    private boolean guess;
 }

@@ -28,10 +28,14 @@ public final class ContestantTuple {
     /**
      * The unique identifier of the first contestant.
      */
-    @NonNull @Getter private String contestant1Id;
+    @NonNull
+    @Getter
+    private String contestant1Id;
 
     /**
      * The unique identifier of the second contestant.
      */
-    @NonNull @Getter private String contestant2Id;
+    @NonNull
+    @Getter
+    private String contestant2Id;
 }

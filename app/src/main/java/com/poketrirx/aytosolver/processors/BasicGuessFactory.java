@@ -12,23 +12,25 @@ package com.poketrirx.aytosolver.processors;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import com.poketrirx.aytosolver.models.Contestant;
 import com.poketrirx.aytosolver.models.ContestantTuple;
 import com.poketrirx.aytosolver.models.Data;
+import com.poketrirx.aytosolver.models.KnownMatchResult;
 
 /* TODO: THIS CURRENTLY ONLY SUPPORTS EXACTLY GROUPS OF 10 CONTESTANTS */
 final class BasicGuessFactory implements GuessFactory {
     private final List<String> men;
     private final List<String> women;
 
-    private long guess = 0L; //Pretty hacky, but we're gonna use a ten digit number.
-        // the index of each number represents the index of the man in our men array
-        // the value of the digit at that index represents the matching women.
-        // If we process 0 through 10 billion that'll be every possible guess
-        // including invalid guessses where we match the same person multiple times.
-        // So, we'll need to make sure we filter those out.
+    private static final int CONTESTANTS_COUNT = 10;
+    private volatile int[] guessArray = new int[CONTESTANTS_COUNT];
+    private Map<Integer, Integer> knownMatches = new HashMap<Integer, Integer>();
+    private Map<Integer, Integer> knownMismatches = new HashMap<Integer, Integer>();
 
     public BasicGuessFactory(Data data) {
         List<String> men = new ArrayList<String>();
@@ -42,12 +44,85 @@ final class BasicGuessFactory implements GuessFactory {
             }
         }
 
-        if (women.size() != 10 || men.size() != 10) {
+        if (women.size() != CONTESTANTS_COUNT || men.size() != CONTESTANTS_COUNT) {
             throw new RuntimeException("Both contestant groups must be 10 in size.");
         }
 
         this.men = men;
         this.women = women;
+
+        for(KnownMatchResult knownMatchResult : data.getKnownMatchResults()) {
+            int maleId = getMaleId(knownMatchResult.getContestants());
+            int femaleId = getFemaleId(knownMatchResult.getContestants());
+
+            if (knownMatchResult.isMatch()) {
+                knownMatches.put(maleId, femaleId);
+            } else {
+                knownMismatches.put(maleId, femaleId);
+            }
+        }
+    }
+
+    private synchronized int[] incrementGuess() {
+        for(int i = 0; i < CONTESTANTS_COUNT; i++) {
+            guessArray[i]++;
+
+            if (guessArray[i] < CONTESTANTS_COUNT) {
+                break;
+            } else {
+                guessArray[i] = 0;                   
+            }
+        }
+
+        if (
+            guessArray[0] == 0 &&
+            guessArray[1] == 0 &&
+            guessArray[2] == 0 &&
+            guessArray[3] == 0 &&
+            guessArray[4] == 0 &&
+            guessArray[5] == 0 &&
+            guessArray[6] == 0 &&
+            guessArray[7] == 0 &&
+            guessArray[8] == 0 &&
+            guessArray[9] == 0
+        ) {
+            return null;
+        }
+
+        int[] ret = new int[CONTESTANTS_COUNT];
+
+        for(int i = 0; i < CONTESTANTS_COUNT; i++) {
+            ret[i] = guessArray[i];
+        }
+
+        return ret;
+    }
+
+    private static boolean doesGuessHaveDupes(int[] thisGuess) {
+        HashSet<Integer> set = new HashSet<Integer>();
+        for (int name : thisGuess) {
+            if (set.add(name) == false) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean doesGuessNotMatchKnownMatchResults(int[] thisGuess) {
+        for (Map.Entry<Integer, Integer> entry : knownMatches.entrySet()) {
+            if (thisGuess[entry.getKey()] != entry.getValue()) {
+                return true;
+            }
+        }
+
+        for (Map.Entry<Integer, Integer> entry : knownMismatches.entrySet()) {
+            if (thisGuess[entry.getKey()] == entry.getValue()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -59,13 +134,13 @@ final class BasicGuessFactory implements GuessFactory {
      */
     public List<ContestantTuple> build(Data data) {
         while(true) {
-            guess++;
+            int[] thisGuess = incrementGuess();
 
-            if (guess > 9999999999L) {
+            if (thisGuess == null) {
                 return null;
             }
 
-            if (countRepeatingDigits(guess) > 1) {
+            if (doesGuessHaveDupes(thisGuess) || doesGuessNotMatchKnownMatchResults(thisGuess)) {
                 continue;
             }
 
@@ -76,7 +151,7 @@ final class BasicGuessFactory implements GuessFactory {
                 result.add(
                     ContestantTuple.builder()
                         .contestant1Id(man)
-                        .contestant2Id(women.get(getWomanIndex(guess, manIndex)))
+                        .contestant2Id(women.get(thisGuess[manIndex]))
                         .build()
                 );
 
@@ -87,53 +162,23 @@ final class BasicGuessFactory implements GuessFactory {
         }
     }
 
-    private int getWomanIndex(long guess, int manIndex) {
-        int divider = (int)Math.pow(10, manIndex);
+    private int getMaleId(ContestantTuple contestantTuple) {
+        if (men.contains(contestantTuple.getContestant1Id())) {
+            return men.indexOf(contestantTuple.getContestant1Id());
+        } else if (men.contains(contestantTuple.getContestant2Id())) {
+            return men.indexOf(contestantTuple.getContestant2Id());
+        }
 
-        return (int)((guess / divider) % 10);
+        return 1;
     }
 
-    private static int countRepeatingDigits(long N)
-    {
-        // Initialize a variable to store
-        // count of Repeating digits
-        int res = 0;
-    
-        // Initialize cnt array to
-        // store digit count
-    
-        int cnt[] = new int[10];
-    
-        // Iterate through the digits of N
-        while (N > 0)
-        {
-        
-            // Retrieve the last digit of N
-            int rem = (int)(N % 10);
-        
-            // Increase the count of digit
-            cnt[rem]++;
-        
-            // Remove the last digit of N
-            N = N / 10;
+    private int getFemaleId(ContestantTuple contestantTuple) {
+        if (women.contains(contestantTuple.getContestant1Id())) {
+            return women.indexOf(contestantTuple.getContestant1Id());
+        } else if (women.contains(contestantTuple.getContestant2Id())) {
+            return women.indexOf(contestantTuple.getContestant2Id());
         }
-    
-        // Iterate through the cnt array
-        for (int i = 0; i < 10; i++)
-        {
-        
-            // If frequency of digit
-            // is greater than 1
-            if (cnt[i] > 1)
-            {
-            
-                // Increment the count
-                // of Repeating digits
-                res++;
-            }
-        }
-    
-        // Return count of repeating digit
-        return res;
+
+        return 1;
     }
 }

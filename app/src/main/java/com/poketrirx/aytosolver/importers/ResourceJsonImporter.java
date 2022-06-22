@@ -16,12 +16,13 @@ import java.nio.charset.StandardCharsets;
 import com.google.common.io.Resources;
 import com.google.gson.GsonBuilder;
 
+import com.poketrirx.aytosolver.core.Importer;
 import com.poketrirx.aytosolver.models.Data;
 
 /**
  * An Importer that'll load data from a json file that's bundled as a resource named data.json
  */
-public class ResourceJsonImporter implements Importer {
+final class ResourceJsonImporter implements Importer {
     /**
      * Loads the input data from a data source.
      * 

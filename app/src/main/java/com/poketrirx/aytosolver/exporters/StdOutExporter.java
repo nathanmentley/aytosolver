@@ -12,15 +12,16 @@ package com.poketrirx.aytosolver.exporters;
 
 import java.util.List;
 
+import com.poketrirx.aytosolver.core.Exporter;
 import com.poketrirx.aytosolver.models.Contestant;
 import com.poketrirx.aytosolver.models.Data;
 import com.poketrirx.aytosolver.models.KnownMatchResult;
-import com.poketrirx.aytosolver.ResultsContext;
+import com.poketrirx.aytosolver.models.ResultsContext;
 
 /**
 * An exporter that'll simply output the results to the console using standard out.
 */
-public final class StdOutExporter implements Exporter {
+final class StdOutExporter implements Exporter {
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_BLACK = "\u001B[30m";
     private static final String ANSI_RED = "\u001B[31m";

@@ -15,7 +15,7 @@ import java.util.List;
 import com.poketrirx.aytosolver.models.ContestantTuple;
 import com.poketrirx.aytosolver.models.Data;
 
-public interface GuessFactory {
+interface GuessFactory {
     /**
      * takes our 10 digit number representing a guess, and builds a list of contestant tuples that represents our matches.
      * 

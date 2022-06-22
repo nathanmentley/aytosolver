@@ -10,9 +10,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package com.poketrirx.aytosolver;
 
-import com.poketrirx.aytosolver.exporters.StdOutExporter;
-import com.poketrirx.aytosolver.importers.ResourceJsonImporter;
-import com.poketrirx.aytosolver.processors.BruteForceProcessor;
+import com.poketrirx.aytosolver.core.App;
 
 /**
  * Entrypoint
@@ -23,9 +21,9 @@ public final class Main {
      */
     public static void main(String[] args) {
         App.builder()
-            .importer(new ResourceJsonImporter())
-            .exporter(new StdOutExporter())
-            .processor(new BruteForceProcessor())
+            .importer(com.poketrirx.aytosolver.importers.Initializer.init())
+            .exporter(com.poketrirx.aytosolver.exporters.Initializer.init())
+            .processor(com.poketrirx.aytosolver.processors.Initializer.init())
             .build()
             .run();
     }
