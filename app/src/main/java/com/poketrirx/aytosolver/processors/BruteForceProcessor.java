@@ -12,102 +12,73 @@ package com.poketrirx.aytosolver.processors;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
+import lombok.Builder;
+import lombok.NonNull;
+
+import com.google.common.collect.ImmutableList;
 import com.poketrirx.aytosolver.core.Processor;
 import com.poketrirx.aytosolver.models.ContestantTuple;
 import com.poketrirx.aytosolver.models.Data;
 import com.poketrirx.aytosolver.models.KnownMatchResult;
 import com.poketrirx.aytosolver.models.ResultsContext;
 import com.poketrirx.aytosolver.models.ResultsContext.ResultsContextBuilder;
+import com.poketrirx.aytosolver.models.utils.ContestantTupleUtils;
+import com.poketrirx.aytosolver.processors.core.GuessEvaluator;
+import com.poketrirx.aytosolver.processors.core.GuessFactory;
 
+@Builder()
 /**
  * A processor that'll test every possible match combination and return all possible match combinations that could still exist in the game.
  */
 final class BruteForceProcessor implements Processor {
-    private static final int WORKER_COUNT = 1;
+    @NonNull
+    private final GuessFactory guessFactory;
 
-	public class Worker implements Runnable {
-        private final ResultsContextBuilder builder;
-        private final GuessFactory guessFactory;
-        private final GuessEvaluator guessEvaluator;
-        private final Data data;
-
-        private volatile static boolean stop = false;
-
-		Worker(
-            ResultsContextBuilder builder,
-            GuessFactory guessFactory,
-            GuessEvaluator guessEvaluator,
-            Data data
-        ) {
-            this.builder = builder;
-            this.guessFactory = guessFactory;
-            this.guessEvaluator = guessEvaluator;
-            this.data = data;
-        }
-
-        @Override
-		public void run() {
-            while(!stop) {
-                List<ContestantTuple> guesses = guessFactory.build(data);
-    
-                if (guesses == null) {
-                    break;
-                }
-    
-                if (guessEvaluator.evaluateGuess(data, guesses)) {
-                    processSuccessfulGuess(data, guesses, builder);
-
-                    stop = true;
-                }
-            }
-        }
-
-        private synchronized void processSuccessfulGuess(Data data, List<ContestantTuple> guesses, ResultsContextBuilder builder) {
-            //Build a list of known matches so we can correctly report what is known, and what is a guess.
-            List<ContestantTuple> knownMatches = new ArrayList<ContestantTuple>();
-            for(KnownMatchResult knownMatchResult : data.getKnownMatchResults()) {
-                if (knownMatchResult.isMatch()) {
-                    knownMatches.add(knownMatchResult.getContestants());
-                }
-            }
-
-            //if our guess is possible, save our guess and continue looking for more.
-            List<KnownMatchResult> solution = new ArrayList<KnownMatchResult>(); 
-            for(ContestantTuple entry : guesses) {
-                solution.add(
-                    KnownMatchResult.builder()
-                        .contestants(entry)
-                        .match(true)
-                        .guess(!ContestantTupleUtils.isMatchInList(knownMatches, entry))
-                        .build()
-                );
-            }
-
-            builder.knownMatchResult(solution);
-        }
-    }
+    @NonNull
+    private final GuessEvaluator guessEvaluator;
 
     public ResultsContext process(Data data) {
-        ResultsContextBuilder builder = ResultsContext.builder();
+        ResultsContextBuilder resultsContextBuilder = ResultsContext.builder();
 
-        GuessFactory guessFactory = new BasicGuessFactory(data);
-        GuessEvaluator guessEvaluator = new BasicGuessEvaluator();
+        while(true) {
+            List<ContestantTuple> guess = guessFactory.build(data);
 
-        ExecutorService executor = Executors.newFixedThreadPool(WORKER_COUNT);
+            if (guess == null) {
+                break;
+            }
 
-        for (int i = 0; i < WORKER_COUNT; i++) {
-			Runnable worker = new Worker(builder, guessFactory, guessEvaluator, data);
+            if (guessEvaluator.evaluateGuess(data, guess)) {
+                processSuccessfulGuess(data, guess, resultsContextBuilder);
 
-			executor.execute(worker);
-		}
+                break;
+            }
+        }
 
-        executor.shutdown();
-		
-		while (!executor.isTerminated()) {}
+        return resultsContextBuilder.build();
+    }
 
-        return builder.build();
+    private void processSuccessfulGuess(Data data, List<ContestantTuple> guess, ResultsContextBuilder builder) {
+        //Build a list of known matches so we can correctly report what is known, and what is a guess.
+        List<ContestantTuple> knownMatches = new ArrayList<ContestantTuple>();
+        for(KnownMatchResult knownMatchResult : data.getKnownMatchResults()) {
+            if (knownMatchResult.isMatch()) {
+                knownMatches.add(knownMatchResult.getContestants());
+            }
+        }
+
+        //if our guess is possible, save our guess and continue looking for more.
+        List<KnownMatchResult> solution = new ArrayList<KnownMatchResult>(); 
+        for(ContestantTuple entry : guess) {
+            solution.add(
+                KnownMatchResult.builder()
+                    .contestants(entry)
+                    .match(true)
+                    .guess(!ContestantTupleUtils.isMatchInList(knownMatches, entry))
+                    .build()
+            );
+        }
+
+        builder.knownMatchResult(ImmutableList.copyOf(solution));
     }
 }

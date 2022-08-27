@@ -10,10 +10,28 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package com.poketrirx.aytosolver.processors;
 
+import com.poketrirx.aytosolver.core.Initializer;
 import com.poketrirx.aytosolver.core.Processor;
+import com.poketrirx.aytosolver.processors.evaluators.BasicGuessEvaluatorInitializer;
+import com.poketrirx.aytosolver.processors.factories.BasicGuessFactoryInitializer;
 
-public class Initializer {
-    public static Processor init() {
-        return new BruteForceProcessor();
+public final class BruteForceProcessorInitializer implements Initializer<Processor> {
+    private static final Initializer<Processor> SINGLETON;
+
+    static {
+        SINGLETON = new BruteForceProcessorInitializer();
+    }
+
+    private BruteForceProcessorInitializer() {}
+
+    public static Initializer<Processor> fetch() {
+        return SINGLETON;
+    }
+
+    public Processor init() {
+        return BruteForceProcessor.builder()
+            .guessFactory(BasicGuessFactoryInitializer.fetch().init())
+            .guessEvaluator(BasicGuessEvaluatorInitializer.fetch().init())
+            .build();
     }
 }

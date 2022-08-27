@@ -30,7 +30,6 @@ final class StdOutExporter implements Exporter {
     private static final String ANSI_BLUE = "\u001B[34m";
     private static final String ANSI_PURPLE = "\u001B[35m";
     private static final String ANSI_CYAN = "\u001B[36m";
-    private static final String ANSI_WHITE = "\u001B[37m";
 
     /**
     * Exports the results based on the raw input data and the current state of the context. 
@@ -41,6 +40,20 @@ final class StdOutExporter implements Exporter {
     public void export(Data data, ResultsContext context) {
         StringBuilder builder = new StringBuilder();
 
+        populateHeader(builder);
+
+        int counter = 1;
+
+        for (List<KnownMatchResult> results : context.getKnownMatchResults()) {
+            populateSolution(builder, counter, data, results);
+
+            counter++;
+        }
+
+        System.out.print(builder.toString());
+    }
+
+    private static void populateHeader(StringBuilder builder) {
         builder.append(System.lineSeparator());
         builder.append(System.lineSeparator());
 
@@ -50,27 +63,29 @@ final class StdOutExporter implements Exporter {
 
         builder.append(System.lineSeparator());
         builder.append(System.lineSeparator());
-
-        int counter = 1;
-        for (List<KnownMatchResult> results : context.getKnownMatchResults()) {
-            builder.append(ANSI_CYAN);
-            builder.append("Solution: ");
-            builder.append(counter);
-            builder.append(ANSI_RESET);
-            builder.append(System.lineSeparator());
-
-            populateSolutionOutput(builder, data, results);
-
-            builder.append(System.lineSeparator());
-            builder.append(System.lineSeparator());
-
-            counter++;
-        }
-
-        System.out.print(builder.toString());
     }
 
-    private static void populateSolutionOutput(StringBuilder builder, Data data, List<KnownMatchResult> results) {
+    private static void populateSolution(StringBuilder builder, int counter, Data data, List<KnownMatchResult> results) {
+        builder.append(ANSI_CYAN);
+        builder.append("Solution: ");
+        builder.append(counter);
+        builder.append(ANSI_RESET);
+        builder.append(System.lineSeparator());
+
+        populateSolutionMatches(builder, data, results);
+
+        builder.append(System.lineSeparator());
+        builder.append(System.lineSeparator());
+    }
+
+    /**
+    * Exports the results based on the raw input data and the current state of the context. 
+    *
+    * @param  buildder  The StringBuilder to populate data against.
+    * @param  data      The raw input data that was processed.
+    * @param  results   The collection of known match results to print.
+    */
+    private static void populateSolutionMatches(StringBuilder builder, Data data, List<KnownMatchResult> results) {
         for (KnownMatchResult result : results) {
             builder.append(ANSI_BLUE);
             builder.append(getContestantName(data.getContestants(), result.getContestants().getContestant1Id()));
@@ -101,12 +116,10 @@ final class StdOutExporter implements Exporter {
     }
 
     private static String getContestantName(List<Contestant> contestants, String id) {
-        for(Contestant contestant : contestants) {
-            if (contestant.getId().equals(id)) {
-                return contestant.getName();
-            }
-        }
-
-        return "Unknown Contestant";
+        return contestants.stream()
+            .filter(contestant -> contestant != null && contestant.getId().equals(id))
+            .map(contestant -> contestant.getName())
+            .findFirst()
+            .orElse("Unknown Contestant");
     }
 }

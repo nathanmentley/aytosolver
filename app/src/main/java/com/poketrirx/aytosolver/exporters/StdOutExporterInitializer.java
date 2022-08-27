@@ -8,29 +8,25 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package com.poketrirx.aytosolver.models;
+package com.poketrirx.aytosolver.exporters;
 
-import com.google.common.collect.ImmutableList;
+import com.poketrirx.aytosolver.core.Exporter;
+import com.poketrirx.aytosolver.core.Initializer;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Singular;
-import lombok.ToString;
+public final class StdOutExporterInitializer implements Initializer<Exporter> {
+    private static final Initializer<Exporter> SINGLETON;
 
-@Builder(toBuilder=true)
-@EqualsAndHashCode
-@ToString(includeFieldNames=true)
-/**
- * A POJO that contains all of the final results.
- */
-public final class ResultsContext {
-    /**
-     * Data around any konwn matches or non matches.
-     */
-    @NonNull
-    @Getter
-    @Singular
-    private final ImmutableList<ImmutableList<KnownMatchResult>> knownMatchResults;
+    static {
+        SINGLETON = new StdOutExporterInitializer();
+    }
+
+    private StdOutExporterInitializer() {}
+
+    public static Initializer<Exporter> fetch() {
+        return SINGLETON;
+    }
+
+    public Exporter init() {
+        return new StdOutExporter();
+    }
 }

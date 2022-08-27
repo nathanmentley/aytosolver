@@ -13,7 +13,10 @@ package com.poketrirx.aytosolver.importers;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import com.baggonius.gson.immutable.ImmutableListDeserializer;
+import com.google.common.collect.ImmutableList;
 import com.google.common.io.Resources;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import com.poketrirx.aytosolver.core.Importer;
@@ -32,9 +35,15 @@ final class ResourceJsonImporter implements Importer {
         try {
             String json = Resources.toString(Resources.getResource("data.json"), StandardCharsets.UTF_8);
 
-            return new GsonBuilder().create().fromJson(json, Data.class);
+            return getGson().fromJson(json, Data.class);
         } catch(IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static Gson getGson() {
+        return new GsonBuilder()
+            .registerTypeAdapter(ImmutableList.class, new ImmutableListDeserializer())
+            .create();
     }
 }

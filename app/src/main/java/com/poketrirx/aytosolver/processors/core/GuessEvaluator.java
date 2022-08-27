@@ -1,10 +1,10 @@
-package com.poketrirx.aytosolver.processors;
+package com.poketrirx.aytosolver.processors.core;
 
 import java.util.List;
 
 import com.poketrirx.aytosolver.models.ContestantTuple;
 import com.poketrirx.aytosolver.models.Data;
 
-interface GuessEvaluator {
+public interface GuessEvaluator {
     boolean evaluateGuess(Data data, List<ContestantTuple> guess);
 }

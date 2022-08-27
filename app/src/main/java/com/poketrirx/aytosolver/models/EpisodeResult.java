@@ -10,21 +10,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package com.poketrirx.aytosolver.models;
 
-import java.util.List;
+import com.google.common.collect.ImmutableList;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.Singular;
 import lombok.ToString;
 
 @Builder(toBuilder=true)
 @EqualsAndHashCode
 @ToString(includeFieldNames=true)
-@AllArgsConstructor
-@RequiredArgsConstructor
 /**
  * A POJO that contains results from an episode.
  */
@@ -33,12 +30,13 @@ public final class EpisodeResult {
      * All contestant matches in the result.
      */
     @NonNull
+    @Singular
     @Getter
-    private List<ContestantTuple> contestants;
+    private final ImmutableList<ContestantTuple> contestants;
 
     /**
      * The total number of correct matches.
      */
     @Getter
-    private int totalCorrect;
+    private final int totalCorrect;
 }

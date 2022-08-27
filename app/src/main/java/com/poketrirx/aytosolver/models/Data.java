@@ -10,19 +10,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package com.poketrirx.aytosolver.models;
 
-import java.util.List;
+import com.google.common.collect.ImmutableList;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.Singular;
 import lombok.ToString;
 
 @Builder(toBuilder=true)
 @EqualsAndHashCode
 @ToString(includeFieldNames=true)
-@RequiredArgsConstructor
 /**
  * A POJO that contains all of the input data that can be analyzed.
  */
@@ -31,20 +30,23 @@ public final class Data {
      * Data around the contestants.
      */
     @NonNull
+    @Singular
     @Getter
-    private List<Contestant> contestants;
+    private final ImmutableList<Contestant> contestants;
 
     /**
      * Data around the results from each episode.
      */
     @NonNull
+    @Singular
     @Getter
-    private List<EpisodeResult> episodeResults;
+    private final ImmutableList<EpisodeResult> episodeResults;
 
     /**
      * Data around any konwn matches or non matches.
      */
     @NonNull
+    @Singular
     @Getter
-    private List<KnownMatchResult> knownMatchResults;
+    private final ImmutableList<KnownMatchResult> knownMatchResults;
 }

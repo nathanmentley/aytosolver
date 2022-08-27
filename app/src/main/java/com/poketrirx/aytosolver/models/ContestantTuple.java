@@ -14,13 +14,11 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @Builder(toBuilder=true)
 @EqualsAndHashCode
 @ToString(includeFieldNames=true)
-@RequiredArgsConstructor
 /**
  * A POJO that contains a link between two Contestants
  */
@@ -30,12 +28,30 @@ public final class ContestantTuple {
      */
     @NonNull
     @Getter
-    private String contestant1Id;
+    private final String contestant1Id;
 
     /**
      * The unique identifier of the second contestant.
      */
     @NonNull
     @Getter
-    private String contestant2Id;
+    private final String contestant2Id;
+
+    public boolean isMatch(ContestantTuple other) {
+        if (
+            getContestant1Id().equals(other.getContestant1Id()) &&
+            getContestant2Id().equals(other.getContestant2Id())
+        ) {
+            return true;
+        }
+
+        if (
+            getContestant1Id().equals(other.getContestant2Id()) &&
+            getContestant2Id().equals(other.getContestant1Id())
+        ) {
+            return true;
+        }
+
+        return false;
+    }
 }

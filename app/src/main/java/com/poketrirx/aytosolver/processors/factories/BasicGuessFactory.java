@@ -8,10 +8,9 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package com.poketrirx.aytosolver.processors;
+package com.poketrirx.aytosolver.processors.factories;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -21,18 +20,63 @@ import com.poketrirx.aytosolver.models.Contestant;
 import com.poketrirx.aytosolver.models.ContestantTuple;
 import com.poketrirx.aytosolver.models.Data;
 import com.poketrirx.aytosolver.models.KnownMatchResult;
+import com.poketrirx.aytosolver.processors.core.GuessFactory;
 
 /* TODO: THIS CURRENTLY ONLY SUPPORTS EXACTLY GROUPS OF 10 CONTESTANTS */
 final class BasicGuessFactory implements GuessFactory {
-    private final List<String> men;
-    private final List<String> women;
+    private boolean isDataSet = false;
+    private List<String> men;
+    private List<String> women;
 
     private static final int CONTESTANTS_COUNT = 10;
     private volatile int[] guessArray = new int[CONTESTANTS_COUNT];
     private Map<Integer, Integer> knownMatches = new HashMap<Integer, Integer>();
     private Map<Integer, Integer> knownMismatches = new HashMap<Integer, Integer>();
 
-    public BasicGuessFactory(Data data) {
+    /**
+     * takes our 10 digit number representing a guess, and builds a list of contestant tuples that represents our matches.
+     * 
+     * If the guess number is too large, we'll return null, and exit the processor.
+     * If the guess would be invalid because of a single person being matched to multiple people, we'll return an empty
+     *  list, and continue on to the next guess.
+     */
+    public List<ContestantTuple> build(Data data) {
+        setData(data);
+
+        while(true) {
+            int[] thisGuess = incrementGuess();
+
+            if (thisGuess == null) {
+                return null;
+            }
+
+            if (doesGuessHaveDupes(thisGuess) || doesGuessNotMatchKnownMatchResults(thisGuess)) {
+                continue;
+            }
+
+            List<ContestantTuple> result = new ArrayList<ContestantTuple>();
+
+            int manIndex = 0;
+            for(String man : men) {
+                result.add(
+                    ContestantTuple.builder()
+                        .contestant1Id(man)
+                        .contestant2Id(women.get(thisGuess[manIndex]))
+                        .build()
+                );
+
+                manIndex++;
+            }
+
+            return result;
+        }
+    }
+
+    private synchronized void setData(Data data) {
+        if (isDataSet) {
+            return;
+        }
+
         List<String> men = new ArrayList<String>();
         List<String> women = new ArrayList<String>();
 
@@ -61,6 +105,8 @@ final class BasicGuessFactory implements GuessFactory {
                 knownMismatches.put(maleId, femaleId);
             }
         }
+
+        isDataSet = true;
     }
 
     private synchronized int[] incrementGuess() {
@@ -123,43 +169,6 @@ final class BasicGuessFactory implements GuessFactory {
         }
 
         return false;
-    }
-
-    /**
-     * takes our 10 digit number representing a guess, and builds a list of contestant tuples that represents our matches.
-     * 
-     * If the guess number is too large, we'll return null, and exit the processor.
-     * If the guess would be invalid because of a single person being matched to multiple people, we'll return an empty
-     *  list, and continue on to the next guess.
-     */
-    public List<ContestantTuple> build(Data data) {
-        while(true) {
-            int[] thisGuess = incrementGuess();
-
-            if (thisGuess == null) {
-                return null;
-            }
-
-            if (doesGuessHaveDupes(thisGuess) || doesGuessNotMatchKnownMatchResults(thisGuess)) {
-                continue;
-            }
-
-            List<ContestantTuple> result = new ArrayList<ContestantTuple>();
-
-            int manIndex = 0;
-            for(String man : men) {
-                result.add(
-                    ContestantTuple.builder()
-                        .contestant1Id(man)
-                        .contestant2Id(women.get(thisGuess[manIndex]))
-                        .build()
-                );
-
-                manIndex++;
-            }
-
-            return result;
-        }
     }
 
     private int getMaleId(ContestantTuple contestantTuple) {

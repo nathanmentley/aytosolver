@@ -10,19 +10,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package com.poketrirx.aytosolver.models;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @Builder(toBuilder=true)
 @EqualsAndHashCode
 @ToString(includeFieldNames=true)
-@AllArgsConstructor
-@RequiredArgsConstructor
 /**
  * A POJO that contains a known match or lack of one between two contestants
  */
@@ -32,17 +28,17 @@ public final class KnownMatchResult {
      */
     @NonNull
     @Getter
-    private ContestantTuple contestants;
+    private final ContestantTuple contestants;
 
     /**
      * A boolean that defines if this result is a match.
      */
     @Getter
-    private boolean match;
+    private final boolean match;
 
     /**
      * A boolean that defines if this result is a guess or known data from the truth booth.
      */
     @Getter
-    private boolean guess;
+    private final boolean guess;
 }

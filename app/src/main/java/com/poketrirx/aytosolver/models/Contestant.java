@@ -14,13 +14,11 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @Builder(toBuilder=true)
 @EqualsAndHashCode
 @ToString(includeFieldNames=true)
-@RequiredArgsConstructor
 /**
  * A POJO that contains information about a contestant on the show.
  */
@@ -30,19 +28,19 @@ public final class Contestant {
      */
     @NonNull
     @Getter
-    private String id;
+    private final String id;
 
     /**
      * The name of the contestant.
      */
     @NonNull
     @Getter
-    private String name;
+    private final String name;
 
     /**
      * The group of the contestant.
      */
     @NonNull
     @Getter
-    private String group;
+    private final String group;
 }

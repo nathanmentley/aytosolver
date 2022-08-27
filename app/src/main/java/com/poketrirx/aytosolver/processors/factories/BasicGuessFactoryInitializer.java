@@ -8,12 +8,25 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package com.poketrirx.aytosolver.exporters;
+package com.poketrirx.aytosolver.processors.factories;
 
-import com.poketrirx.aytosolver.core.Exporter;
+import com.poketrirx.aytosolver.core.Initializer;
+import com.poketrirx.aytosolver.processors.core.GuessFactory;
 
-public class Initializer {
-    public static Exporter init() {
-        return new StdOutExporter();
+public final class BasicGuessFactoryInitializer implements Initializer<GuessFactory> {
+    private static final Initializer<GuessFactory> SINGLETON;
+
+    static {
+        SINGLETON = new BasicGuessFactoryInitializer();
+    }
+
+    private BasicGuessFactoryInitializer() {}
+
+    public static Initializer<GuessFactory> fetch() {
+        return SINGLETON;
+    }
+
+    public GuessFactory init() {
+        return new BasicGuessFactory();
     }
 }
