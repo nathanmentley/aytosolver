@@ -8,30 +8,24 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package com.poketrirx.aytosolver.processors;
+package com.poketrirx.aytosolver.cli;
 
-import com.poketrirx.aytosolver.core.Initializer;
-import com.poketrirx.aytosolver.core.Processor;
-import com.poketrirx.aytosolver.processors.evaluators.BasicGuessEvaluatorInitializer;
-import com.poketrirx.aytosolver.processors.factories.BasicGuessFactoryInitializer;
+import java.util.Objects;
 
-public final class BruteForceProcessorInitializer implements Initializer<Processor> {
-    private static final Initializer<Processor> SINGLETON;
+import picocli.CommandLine;
 
-    static {
-        SINGLETON = new BruteForceProcessorInitializer();
-    }
+import com.poketrirx.aytosolver.cli.commands.RootCommand;
 
-    private BruteForceProcessorInitializer() {}
+/**
+ * Entrypoint
+ */
+public final class Main {
+    /**
+     * Entrypoint. Builds and runs the app.
+     */
+    public static void main(String[] args) {
+        Objects.requireNonNull(args);
 
-    public static Initializer<Processor> fetch() {
-        return SINGLETON;
-    }
-
-    public Processor init() {
-        return BruteForceProcessor.builder()
-            .guessFactory(BasicGuessFactoryInitializer.fetch().init())
-            .guessEvaluator(BasicGuessEvaluatorInitializer.fetch().init())
-            .build();
+        System.exit(new CommandLine(RootCommand.class, new Factory()).execute(args));
     }
 }

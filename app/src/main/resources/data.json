@@ -106,13 +106,11 @@
             "contestants": [
                 {
                     "contestant1Id": "kaylen",
-                    "contestant2Id": "gio",
-                    "@@RESULT": false
+                    "contestant2Id": "gio"
                 },
                 {
                     "contestant1Id": "victoria",
-                    "contestant2Id": "cam",
-                    "@@RESULT": false
+                    "contestant2Id": "cam"
                 },
                 {
                     "contestant1Id": "francesca",
@@ -128,13 +126,11 @@
                 },
                 {
                     "contestant1Id": "alyssa",
-                    "contestant2Id": "sam",
-                    "@@RESULT": true
+                    "contestant2Id": "sam"
                 },
                 {
                     "contestant1Id": "mikala",
-                    "contestant2Id": "cameron",
-                    "@@RESULT": true
+                    "contestant2Id": "cameron"
                 },
                 {
                     "contestant1Id": "julia",
@@ -167,18 +163,15 @@
                 },
                 {
                     "contestant1Id": "cameron",
-                    "contestant2Id": "mikala",
-                    "@@RESULT": true
+                    "contestant2Id": "mikala"
                 },
                 {
                     "contestant1Id": "morgan",
-                    "contestant2Id": "alyssa",
-                    "@@RESULT": false
+                    "contestant2Id": "alyssa"
                 },
                 {
                     "contestant1Id": "sam",
-                    "contestant2Id": "francesca",
-                    "@@RESULT": false
+                    "contestant2Id": "francesca"
                 },
                 {
                     "contestant1Id": "prosper",
@@ -190,8 +183,7 @@
                 },
                 {
                     "contestant1Id": "gio",
-                    "contestant2Id": "kaylen",
-                    "@@RESULT": false
+                    "contestant2Id": "kaylen"
                 },
                 {
                     "contestant1Id": "john",
@@ -228,18 +220,15 @@
                 },
                 {
                     "contestant1Id": "kaylen",
-                    "contestant2Id": "gio",
-                    "@@RESULT": false
+                    "contestant2Id": "gio"
                 },
                 {
                     "contestant1Id": "alyssa",
-                    "contestant2Id": "sam",
-                    "@@RESULT": true
+                    "contestant2Id": "sam"
                 },
                 {
                     "contestant1Id": "mikala",
-                    "contestant2Id": "cameron",
-                    "@@RESULT": true
+                    "contestant2Id": "cameron"
                 },
                 {
                     "contestant1Id": "julia",
@@ -252,8 +241,7 @@
             "contestants": [
                 {
                     "contestant1Id": "mikala",
-                    "contestant2Id": "cameron",
-                    "@@RESULT": true
+                    "contestant2Id": "cameron"
                 },
                 {
                     "contestant1Id": "morgan",
@@ -273,8 +261,7 @@
                 },
                 {
                     "contestant1Id": "gio",
-                    "contestant2Id": "kaylen",
-                    "@@RESULT": false
+                    "contestant2Id": "kaylen"
                 },
                 {
                     "contestant1Id": "stephen",
@@ -286,8 +273,7 @@
                 },
                 {
                     "contestant1Id": "sam",
-                    "contestant2Id": "alyssa",
-                    "@@RESULT": true
+                    "contestant2Id": "alyssa"
                 },
                 {
                     "contestant1Id": "cam",
@@ -321,8 +307,7 @@
                 },
                 {
                     "contestant1Id": "alyssa",
-                    "contestant2Id": "sam",
-                    "@@RESULT": true
+                    "contestant2Id": "sam"
                 },
                 {
                     "contestant1Id": "julia",
@@ -347,13 +332,11 @@
             "contestants": [
                 {
                     "contestant1Id": "mikala",
-                    "contestant2Id": "cameron",
-                    "@@RESULT": true
+                    "contestant2Id": "cameron"
                 },
                 {
                     "contestant1Id": "alyssa",
-                    "contestant2Id": "sam",
-                    "@@RESULT": true
+                    "contestant2Id": "sam"
                 },
                 {
                     "contestant1Id": "john",
@@ -361,8 +344,7 @@
                 },
                 {
                     "contestant1Id": "cam",
-                    "contestant2Id": "victoria",
-                    "@@RESULT": false
+                    "contestant2Id": "victoria"
                 },
                 {
                     "contestant1Id": "morgan",
@@ -395,13 +377,11 @@
             "contestants": [
                 {
                     "contestant1Id": "mikala",
-                    "contestant2Id": "cameron",
-                    "@@RESULT": true
+                    "contestant2Id": "cameron"
                 },
                 {
                     "contestant1Id": "alyssa",
-                    "contestant2Id": "sam",
-                    "@@RESULT": true
+                    "contestant2Id": "sam"
                 },
                 {
                     "contestant1Id": "victoria",
@@ -496,6 +476,5 @@
             "match": false,
             "guess": false
         }
-
     ]
 }

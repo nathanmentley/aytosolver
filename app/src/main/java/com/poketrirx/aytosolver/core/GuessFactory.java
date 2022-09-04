@@ -8,26 +8,20 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package com.poketrirx.aytosolver;
+package com.poketrirx.aytosolver.core;
 
-import com.poketrirx.aytosolver.core.App;
-import com.poketrirx.aytosolver.exporters.StdOutExporterInitializer;
-import com.poketrirx.aytosolver.importers.ResourceJsonImporterInitializer;
-import com.poketrirx.aytosolver.processors.BruteForceProcessorInitializer;
+import java.util.List;
 
-/**
- * Entrypoint
- */
-public final class Main {
+import com.poketrirx.aytosolver.models.ContestantTuple;
+import com.poketrirx.aytosolver.models.Data;
+
+public interface GuessFactory {
     /**
-     * Entrypoint. Builds and runs the app.
+     * takes our 10 digit number representing a guess, and builds a list of contestant tuples that represents our matches.
+     * 
+     * If the guess number is too large, we'll return null, and exit the processor.
+     * If the guess would be invalid because of a single person being matched to multiple people, we'll return an empty
+     *  list, and continue on to the next guess.
      */
-    public static void main(String[] args) {
-        App.builder()
-            .importer(ResourceJsonImporterInitializer.fetch().init())
-            .processor(BruteForceProcessorInitializer.fetch().init())
-            .exporter(StdOutExporterInitializer.fetch().init())
-            .build()
-            .run();
-    }
+    List<ContestantTuple> build(Data data);
 }

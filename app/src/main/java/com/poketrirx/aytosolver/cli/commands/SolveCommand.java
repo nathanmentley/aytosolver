@@ -8,20 +8,43 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package com.poketrirx.aytosolver.processors.core;
+package com.poketrirx.aytosolver.cli.commands;
 
-import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.Objects;
+import javax.inject.Inject;
 
-import com.poketrirx.aytosolver.models.ContestantTuple;
+import picocli.CommandLine.Command;
+
+import com.poketrirx.aytosolver.core.Exporter;
+import com.poketrirx.aytosolver.core.Importer;
+import com.poketrirx.aytosolver.core.Processor;
 import com.poketrirx.aytosolver.models.Data;
+import com.poketrirx.aytosolver.models.ResultsContext;
 
-public interface GuessFactory {
-    /**
-     * takes our 10 digit number representing a guess, and builds a list of contestant tuples that represents our matches.
-     * 
-     * If the guess number is too large, we'll return null, and exit the processor.
-     * If the guess would be invalid because of a single person being matched to multiple people, we'll return an empty
-     *  list, and continue on to the next guess.
-     */
-    List<ContestantTuple> build(Data data);
+@Command(name = "solve")
+final class SolveCommand implements Callable<Integer> {
+    private final Importer importer;
+
+    private final Exporter exporter;
+
+    private final Processor processor;
+
+    @Inject
+    public SolveCommand(Importer importer, Exporter exporter, Processor processor) {
+        this.importer = Objects.requireNonNull(importer);
+        this.exporter = Objects.requireNonNull(exporter);
+        this.processor = Objects.requireNonNull(processor);
+    }
+
+    @Override
+    public Integer call() throws Exception {
+        Data data = importer.load();
+
+        ResultsContext context = processor.process(data);
+
+        exporter.export(data, context);
+
+        return 0;
+    }
 }

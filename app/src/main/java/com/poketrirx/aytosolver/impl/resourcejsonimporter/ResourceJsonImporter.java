@@ -8,10 +8,11 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package com.poketrirx.aytosolver.importers;
+package com.poketrirx.aytosolver.impl.resourcejsonimporter;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import javax.inject.Inject;
 
 import com.baggonius.gson.immutable.ImmutableListDeserializer;
 import com.google.common.collect.ImmutableList;
@@ -25,7 +26,14 @@ import com.poketrirx.aytosolver.models.Data;
 /**
  * An Importer that'll load data from a json file that's bundled as a resource named data.json
  */
-final class ResourceJsonImporter implements Importer {
+public final class ResourceJsonImporter implements Importer {
+    private final static Gson GSON = new GsonBuilder()
+        .registerTypeAdapter(ImmutableList.class, new ImmutableListDeserializer())
+        .create();
+
+    @Inject
+    public ResourceJsonImporter() {}
+
     /**
      * Loads the input data from a data source.
      * 
@@ -35,15 +43,9 @@ final class ResourceJsonImporter implements Importer {
         try {
             String json = Resources.toString(Resources.getResource("data.json"), StandardCharsets.UTF_8);
 
-            return getGson().fromJson(json, Data.class);
+            return GSON.fromJson(json, Data.class);
         } catch(IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static Gson getGson() {
-        return new GsonBuilder()
-            .registerTypeAdapter(ImmutableList.class, new ImmutableListDeserializer())
-            .create();
     }
 }

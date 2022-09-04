@@ -10,6 +10,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package com.poketrirx.aytosolver.models;
 
+import java.util.Objects;
+
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -37,21 +39,25 @@ public final class ContestantTuple {
     @Getter
     private final String contestant2Id;
 
+    /**
+     * Checks if this ContestantTuple is a match for another ContestantTuple
+     * 
+     * @param other The other ContestantTuple to evaluate against
+     * @return True if the two Tuples match. If the two contestants are flipped it is still a match.
+     */
     public boolean isMatch(ContestantTuple other) {
-        if (
-            getContestant1Id().equals(other.getContestant1Id()) &&
-            getContestant2Id().equals(other.getContestant2Id())
-        ) {
-            return true;
+        if (Objects.isNull(other)) {
+            return false;
         }
 
-        if (
-            getContestant1Id().equals(other.getContestant2Id()) &&
-            getContestant2Id().equals(other.getContestant1Id())
-        ) {
-            return true;
-        }
-
-        return false;
+        return (
+            (
+                getContestant1Id().equals(other.getContestant1Id()) &&
+                getContestant2Id().equals(other.getContestant2Id())
+            ) || (
+                getContestant1Id().equals(other.getContestant2Id()) &&
+                getContestant2Id().equals(other.getContestant1Id())
+            )
+        );
     }
 }

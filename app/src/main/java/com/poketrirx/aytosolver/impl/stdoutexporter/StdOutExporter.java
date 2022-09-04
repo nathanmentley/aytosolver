@@ -8,9 +8,10 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package com.poketrirx.aytosolver.exporters;
+package com.poketrirx.aytosolver.impl.stdoutexporter;
 
 import java.util.List;
+import javax.inject.Inject;
 
 import com.poketrirx.aytosolver.core.Exporter;
 import com.poketrirx.aytosolver.models.Contestant;
@@ -21,7 +22,7 @@ import com.poketrirx.aytosolver.models.ResultsContext;
 /**
 * An exporter that'll simply output the results to the console using standard out.
 */
-final class StdOutExporter implements Exporter {
+public final class StdOutExporter implements Exporter {
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_BLACK = "\u001B[30m";
     private static final String ANSI_RED = "\u001B[31m";
@@ -30,6 +31,9 @@ final class StdOutExporter implements Exporter {
     private static final String ANSI_BLUE = "\u001B[34m";
     private static final String ANSI_PURPLE = "\u001B[35m";
     private static final String ANSI_CYAN = "\u001B[36m";
+
+    @Inject
+    public StdOutExporter() {}
 
     /**
     * Exports the results based on the raw input data and the current state of the context. 

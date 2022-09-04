@@ -11,7 +11,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 package com.poketrirx.aytosolver.models;
 
 import com.google.common.collect.ImmutableList;
-
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

@@ -8,25 +8,13 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package com.poketrirx.aytosolver.processors.evaluators;
+package com.poketrirx.aytosolver.core;
 
-import com.poketrirx.aytosolver.core.Initializer;
-import com.poketrirx.aytosolver.processors.core.GuessEvaluator;
+import java.util.List;
 
-public final class BasicGuessEvaluatorInitializer implements Initializer<GuessEvaluator> {
-    private static final Initializer<GuessEvaluator> SINGLETON;
+import com.poketrirx.aytosolver.models.ContestantTuple;
+import com.poketrirx.aytosolver.models.Data;
 
-    static {
-        SINGLETON = new BasicGuessEvaluatorInitializer();
-    }
-
-    private BasicGuessEvaluatorInitializer() {}
-
-    public static Initializer<GuessEvaluator> fetch() {
-        return SINGLETON;
-    }
-
-    public GuessEvaluator init() {
-        return new BasicGuessEvaluator();
-    }
+public interface GuessEvaluator {
+    boolean evaluateGuess(Data data, List<ContestantTuple> guess);
 }

@@ -8,30 +8,39 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package com.poketrirx.aytosolver.processors.factories;
+package com.poketrirx.aytosolver.impl.basicguessfactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
 
+import com.poketrirx.aytosolver.core.GuessFactory;
 import com.poketrirx.aytosolver.models.Contestant;
 import com.poketrirx.aytosolver.models.ContestantTuple;
 import com.poketrirx.aytosolver.models.Data;
 import com.poketrirx.aytosolver.models.KnownMatchResult;
-import com.poketrirx.aytosolver.processors.core.GuessFactory;
 
 /* TODO: THIS CURRENTLY ONLY SUPPORTS EXACTLY GROUPS OF 10 CONTESTANTS */
-final class BasicGuessFactory implements GuessFactory {
+public final class BasicGuessFactory implements GuessFactory {
+    private static final int CONTESTANTS_COUNT = 10;
+
+    private int[] guessArray = new int[CONTESTANTS_COUNT];
+
+    private Map<Integer, Integer> knownMatches = new HashMap<Integer, Integer>();
+
+    private Map<Integer, Integer> knownMismatches = new HashMap<Integer, Integer>();
+
     private boolean isDataSet = false;
+
     private List<String> men;
+
     private List<String> women;
 
-    private static final int CONTESTANTS_COUNT = 10;
-    private volatile int[] guessArray = new int[CONTESTANTS_COUNT];
-    private Map<Integer, Integer> knownMatches = new HashMap<Integer, Integer>();
-    private Map<Integer, Integer> knownMismatches = new HashMap<Integer, Integer>();
+    @Inject
+    public BasicGuessFactory() {}
 
     /**
      * takes our 10 digit number representing a guess, and builds a list of contestant tuples that represents our matches.
